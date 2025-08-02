@@ -3,7 +3,7 @@ import ShelfyActivity from "./ShelfyActivity";
 
 const HeroSection = () => {
   return (
-    <div className="flex container max-w-6xl gap-10 mx-auto min-h-screen items-center justify-center mt-9 py-12">
+    <div className="flex container max-w-6xl gap-10 mx-auto min-h-[89vh] items-center justify-center">
       {/* Left Part */}
       <Intro></Intro>
 

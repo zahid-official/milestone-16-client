@@ -100,13 +100,13 @@ export default function Banner() {
                   <div className="text-2xl lg:text-3xl font-bold text-white mb-2">
                     <span>99.9%</span>
                   </div>
-                  <div className="text-sm">Uptime</div>
+                  <div className="text-sm">Server Uptime</div>
                 </div>
 
                 <div className="text-center">
                   <div className="text-2xl lg:text-3xl font-bold text-white mb-2 flex items-center justify-center gap-1">
-                    <span>4.9</span>
                     <Star className="h-5 w-5 fill-white text-white" />
+                    <span>4.9</span>
                   </div>
                   <div className="text-sm">User Rating</div>
                 </div>

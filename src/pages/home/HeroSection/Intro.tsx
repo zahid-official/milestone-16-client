@@ -8,10 +8,10 @@ const Intro = () => {
 
   // stats
   const stats = [
-    { value: "500+", label: "Libraries" },
-    { value: "50,000+", label: "Books" },
-    { value: "99.9%", label: "Uptime" },
-    { value: "4.9", label: "Rating", icon: Star },
+    { value: "500+", label: "Active Libraries" },
+    { value: "50,000+", label: "Books Managed" },
+    { value: "99.9%", label: "Server Uptime" },
+    { value: "4.9", label: "User Rating", icon: Star },
   ];
 
   // useEffect
@@ -102,12 +102,12 @@ const Intro = () => {
             }}
           >
             <div className="flex items-center space-x-1">
-              <div className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
-                {stat.value}
-              </div>
               {stat.icon && (
                 <stat.icon className="h-5 w-5 fill-black text-black dark:fill-white dark:text-white" />
               )}
+              <div className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
+                {stat.value}
+              </div>
             </div>
             <div className="mt-1 text-sm font-medium text-gray-600 dark:text-gray-400 sm:text-base">
               {stat.label}
