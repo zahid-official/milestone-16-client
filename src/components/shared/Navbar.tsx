@@ -20,7 +20,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky py-2 top-0 z-50 w-full border-b border-white/10 bg-white/70 dark:bg-gray-950/70 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/60 dark:supports-[backdrop-filter]:bg-gray-950/60 shadow-sm shadow-black/5">
+    <nav className="fixed py-2 top-0 z-50 w-full border-b border-white/10 bg-white/90 dark:bg-gray-950/90 backdrop-blur-xl backdrop-saturate-150 supports-[backdrop-filter]:bg-white/80 dark:supports-[backdrop-filter]:bg-gray-950/80 shadow-sm shadow-black/5">
       <div className="container mx-auto md:px-4 px-10">
         <div className="flex h-18 items-center justify-between">
           {/* logo */}
