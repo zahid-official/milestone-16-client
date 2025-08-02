@@ -35,10 +35,9 @@ export default function Navbar() {
 
           {/* navigation */}
           <div className="hidden md:flex items-center space-x-3">
-            {navItems.map((item, index) => (
-              <Link to={item.href}>
+            {navItems?.map((item, index) => (
+              <Link key={item.label} to={item.href}>
                 <Button
-                  key={item.label}
                   variant="ghost"
                   size="default"
                   className="relative h-10 cursor-pointer px-4 text-base font-medium transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-accent hover:text-accent-foreground hover:scale-105 group will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"

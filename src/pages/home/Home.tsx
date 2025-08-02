@@ -1,9 +1,18 @@
-import HeroSecton from "./sections/HeroSecton";
+import HeroSecton from "./HeroSection/HeroSecton";
+import ManageSection from "./ManageSection/ManageSection";
 
 const Home = () => {
   return (
     <div>
-      <HeroSecton></HeroSecton>
+      {/* hero section */}
+      <section>
+        <HeroSecton></HeroSecton>
+      </section>
+
+      {/* manage section */}
+      <section>
+        <ManageSection></ManageSection>
+      </section>
     </div>
   );
 };
