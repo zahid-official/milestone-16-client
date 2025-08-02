@@ -25,8 +25,8 @@ export default function Navbar() {
         <div className="flex h-18 items-center justify-between">
           {/* logo */}
           <div className="flex items-center space-x-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 hover:rotate-2 will-change-transform transform-gpu origin-center">
-              <BookOpen className="h-6 w-6" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-lg hover:bg-black hover:text-white cursor-pointer text-black dark:text-white dark:hover:bg-gray-400 dark:hover:text-black transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] border will-change-transform transform-gpu origin-center">
+              <BookOpen className="h-7 w-7" />
             </div>
             <span className="font-bold text-3xl sm:inline-block bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
               Shelfy
