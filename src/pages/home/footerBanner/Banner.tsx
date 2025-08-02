@@ -12,7 +12,7 @@ export default function Banner() {
     <section className="py-32 relative overflow-hidden">
       <div className="container  max-w-6xl mx-auto">
         <div className="transition-all duration-700 ease-out opacity-100 translate-x-0 translate-y-0">
-          <div className="relative overflow-hidden rounded-3xl bg-black px-8 py-24 text-center text-white shadow-2xl">
+          <div className="relative overflow-hidden rounded-3xl bg-black px-8 py-16 text-center text-white shadow-2xl">
             {/* Dotted pattern overlay */}
             <div
               className="absolute inset-0 opacity-30"
@@ -106,7 +106,7 @@ export default function Banner() {
                 <div className="text-center">
                   <div className="text-2xl lg:text-3xl font-bold text-white mb-2 flex items-center justify-center gap-1">
                     <span>4.9</span>
-                    <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    <Star className="h-5 w-5 fill-white text-white" />
                   </div>
                   <div className="text-sm">User Rating</div>
                 </div>
