@@ -128,7 +128,7 @@ const AllBooks = () => {
 
         {/* Table Section */}
         <div>
-          <Card className="flex flex-col gap-6 rounded-xl border py-6 shadow-sm">
+          <Card className="flex flex-col gap-6 rounded-xl border px-2 shadow-sm">
             <CardContent className="p-0">
               <div className="overflow-x-auto">
                 <Table>
@@ -138,7 +138,7 @@ const AllBooks = () => {
                       {columnsTitle?.map((title) => (
                         <TableHead
                           key={title.value}
-                          className="text-center text-foreground"
+                          className="text-center text-foreground pb-5"
                         >
                           {title.label}
                         </TableHead>
@@ -151,12 +151,13 @@ const AllBooks = () => {
                     {books.map((book) => (
                       <tr
                         key={book.id}
-                        className="border-b hover:bg-muted/50 transition-colors"
+                        className="border-b hover:bg-muted/50 transition-colors cursor-pointer"
                       >
+                        {/* title */}
                         <TableCell className="px-4 py-3">
-                          <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded bg-muted flex items-center justify-center flex-shrink-0">
-                              <BookOpen className="h-4 w-4 text-muted-foreground" />
+                          <div className="flex items-center gap-2">
+                            <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                              <BookOpen className="h-5 w-5 text-muted-foreground" />
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="font-medium text-sm truncate">
@@ -165,6 +166,8 @@ const AllBooks = () => {
                             </div>
                           </div>
                         </TableCell>
+
+                        {/* author */}
                         <TableCell className="px-4 py-3 text-center">
                           <div className="text-sm">{book.author}</div>
                         </TableCell>
@@ -173,14 +176,20 @@ const AllBooks = () => {
                             {book.genre}
                           </Badge>
                         </TableCell>
+
+                        {/* isbn */}
                         <TableCell className="px-4 py-3 text-center">
                           <div className="text-xs text-muted-foreground font-mono">
                             {book.isbn}
                           </div>
                         </TableCell>
+
+                        {/* copies */}
                         <TableCell className="px-4 py-3 text-center">
                           <div className="text-sm">{book.totalCopies}</div>
                         </TableCell>
+
+                        {/* availablity */}
                         <TableCell className="px-4 py-3 text-center">
                           <Badge
                             variant={
@@ -197,29 +206,36 @@ const AllBooks = () => {
                             {book.availableCopies} / {book.totalCopies}
                           </Badge>
                         </TableCell>
+
+                        {/* actions */}
                         <TableCell className="px-4 py-3 text-right">
                           <div className="flex justify-end gap-2">
+                            {/* edit */}
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8"
+                              className="h-8 w-8 cursor-pointer"
                             >
                               <Pencil className="h-4 w-4" />
                               <span className="sr-only">Edit</span>
                             </Button>
+
+                            {/* borrow */}
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8"
+                              className="h-8 w-8  cursor-pointer"
                               disabled={book.availableCopies === 0}
                             >
                               <LibraryBig className="h-4 w-4" />
                               <span className="sr-only">Borrow</span>
                             </Button>
+
+                            {/* delete */}
                             <Button
                               variant="ghost"
                               size="icon"
-                              className="h-8 w-8"
+                              className="h-8 w-8 cursor-pointer"
                             >
                               <Trash2 className="h-4 w-4 text-red-600" />
                               <span className="sr-only">Delete</span>
@@ -231,7 +247,7 @@ const AllBooks = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className="px-4 py-3 border-t bg-muted/20">
+              <div className="px-4  pt-5 border-t bg-muted/20">
                 <p className="text-sm text-muted-foreground">
                   Showing {books.length} of {books.length} books
                 </p>
