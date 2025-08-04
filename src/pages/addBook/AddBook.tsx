@@ -18,12 +18,12 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
+import type z from "zod";
+import { useState } from "react";
+import { BookOpen, Save } from "lucide-react";
 import booksZodSchema from "@/schema/booksZodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookOpen, Save } from "lucide-react";
-import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import type z from "zod";
 
 // genres
 const genres = [
@@ -36,6 +36,7 @@ const genres = [
 ];
 
 const AddBook = () => {
+  // submitting state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // react hook form
@@ -56,7 +57,7 @@ const AddBook = () => {
     setIsSubmitting(false);
 
     // reset form
-    // form.reset();
+    form.reset();
   };
 
   return (
