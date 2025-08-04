@@ -1,5 +1,11 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -17,13 +23,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-import type z from "zod";
-import { useState } from "react";
 import { BookOpen, Save } from "lucide-react";
-import booksZodSchema from "@/schema/booksZodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
+import booksZodSchema from "@/schema/booksZodSchema";
+import type z from "zod";
 
 // genres
 const genres = [
@@ -36,45 +40,58 @@ const genres = [
 ];
 
 const AddBook = () => {
-  // submitting state
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isHeadingVisible, setIsHeadingVisible] = useState(false);
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
-  // react hook form
+  useEffect(() => {
+    const headingTimeout = setTimeout(() => setIsHeadingVisible(true), 50);
+    const formTimeout = setTimeout(() => setIsFormVisible(true), 300);
+    return () => {
+      clearTimeout(headingTimeout);
+      clearTimeout(formTimeout);
+    };
+  }, []);
+
   const form = useForm({
     resolver: zodResolver(booksZodSchema),
   });
 
-  // handle form submission
   const onSubmit: SubmitHandler<z.infer<typeof booksZodSchema>> = async (
     data
   ) => {
     setIsSubmitting(true);
-
-    // submitData
     const submitData = { ...data, available: data.available ?? true };
-
     console.log("Submit: ", submitData);
     setIsSubmitting(false);
-
-    // reset form
     form.reset();
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex items-center justify-center pt-24 pb-32">
-      <div className="w-full max-w-xl">
-        {/* page heading */}
-        <div className="text-center mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-0.5">
-            Add New Book
-          </h1>
-          <p className="text-base text-gray-600 dark:text-gray-300">
-            Add a new book record to your library collection
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex flex-col items-center justify-center pt-24 pb-32 px-4">
+      {/* Animated Heading */}
+      <div
+        className={`text-center transition-all duration-700 ease-out ${
+          isHeadingVisible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-4"
+        }`}
+      >
+        <h1 className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-gray-900 dark:text-white transition-all duration-700 ease-out delay-200">
+          Add New Book
+        </h1>
+        <p className="text-base text-gray-600 dark:text-gray-300 transition-all duration-700 ease-out delay-200">
+          Add a new book record to your library collection
+        </p>
+      </div>
 
+      {/* Animated Form/Card */}
+      <div
+        className={`w-full max-w-xl mt-10 transition-all duration-1000 ease-out transform ${
+          isFormVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+      >
         <Card className="shadow-xl border-0 pt-14 pb-17 px-2">
-          {/* card header */}
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl font-bold">
               <BookOpen className="-mb-1.5" />
@@ -83,12 +100,8 @@ const AddBook = () => {
           </CardHeader>
 
           <CardContent>
-            {/* form */}
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 {/* title & author */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
@@ -110,8 +123,6 @@ const AddBook = () => {
                       </FormItem>
                     )}
                   />
-
-                  {/* author */}
                   <FormField
                     control={form.control}
                     name="author"
@@ -164,8 +175,6 @@ const AddBook = () => {
                       </FormItem>
                     )}
                   />
-
-                  {/* isbn */}
                   <FormField
                     control={form.control}
                     name="isbn"
@@ -203,9 +212,7 @@ const AddBook = () => {
                             placeholder="Enter number of copies"
                             {...field}
                             value={
-                              field.value !== undefined
-                                ? Number(field.value)
-                                : ""
+                              field.value !== undefined ? Number(field.value) : ""
                             }
                           />
                         </FormControl>
@@ -213,8 +220,6 @@ const AddBook = () => {
                       </FormItem>
                     )}
                   />
-
-                  {/* available */}
                   <FormField
                     control={form.control}
                     name="available"
@@ -245,7 +250,7 @@ const AddBook = () => {
                   />
                 </div>
 
-                {/* description field */}
+                {/* description */}
                 <FormField
                   control={form.control}
                   name="description"
@@ -265,7 +270,7 @@ const AddBook = () => {
                   )}
                 />
 
-                {/* form buttons */}
+                {/* buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-6">
                   <Button
                     type="submit"
