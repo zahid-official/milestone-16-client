@@ -17,9 +17,13 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+
+import booksZodSchema from "@/schema/booksZodSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { BookOpen, Save } from "lucide-react";
 import { useState } from "react";
-import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import type z from "zod";
 
 // genres
 const genres = [
@@ -35,10 +39,14 @@ const AddBook = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // react hook form
-  const form = useForm();
+  const form = useForm({
+    resolver: zodResolver(booksZodSchema),
+  });
 
   // handle form submission
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<z.infer<typeof booksZodSchema>> = async (
+    data
+  ) => {
     setIsSubmitting(true);
 
     // submitData
@@ -46,10 +54,14 @@ const AddBook = () => {
 
     console.log("Submit: ", submitData);
     setIsSubmitting(false);
+
+    // reset form
+    // form.reset();
   };
+
   return (
     <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex items-center justify-center pt-24 pb-32">
-      <div className="w-full max-w-lg">
+      <div className="w-full max-w-xl">
         {/* page heading */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-0.5">
@@ -163,7 +175,7 @@ const AddBook = () => {
                         </FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="978-0-123456-78-9"
+                            placeholder="Enter book's ISBN"
                             {...field}
                             value={field.value ?? ""}
                           />
@@ -187,10 +199,13 @@ const AddBook = () => {
                         <FormControl>
                           <Input
                             type="number"
-                            min="0"
                             placeholder="Enter number of copies"
                             {...field}
-                            value={field.value ?? ""}
+                            value={
+                              field.value !== undefined
+                                ? Number(field.value)
+                                : ""
+                            }
                           />
                         </FormControl>
                         <FormMessage />
@@ -206,8 +221,12 @@ const AddBook = () => {
                       <FormItem>
                         <FormLabel>Available</FormLabel>
                         <Select
-                          onValueChange={field.onChange}
-                          value={field.value ?? ""}
+                          onValueChange={(value) =>
+                            field.onChange(value === "true")
+                          }
+                          value={
+                            field.value === undefined ? "" : String(field.value)
+                          }
                         >
                           <FormControl>
                             <SelectTrigger className="w-full">
