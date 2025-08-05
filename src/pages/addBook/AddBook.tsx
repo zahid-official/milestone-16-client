@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -88,7 +83,9 @@ const AddBook = () => {
       {/* Animated Form/Card */}
       <div
         className={`w-full max-w-xl mt-10 transition-all duration-1000 ease-out transform ${
-          isFormVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          isFormVisible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-8"
         }`}
       >
         <Card className="shadow-xl border-0 pt-14 pb-17 px-2">
@@ -101,7 +98,10 @@ const AddBook = () => {
 
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 {/* title & author */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <FormField
@@ -212,7 +212,9 @@ const AddBook = () => {
                             placeholder="Enter number of copies"
                             {...field}
                             value={
-                              field.value !== undefined ? Number(field.value) : ""
+                              field.value !== undefined
+                                ? Number(field.value)
+                                : ""
                             }
                           />
                         </FormControl>

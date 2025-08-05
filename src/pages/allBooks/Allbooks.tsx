@@ -86,8 +86,8 @@ const AllBooks = () => {
   );
 
   return (
-    <div className="mt-36 bg-background flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-7xl mx-auto space-y-6">
+    <div className="mt-36 bg-background flex items-center justify-center">
+      <div className="w-full max-w-6xl mx-auto space-y-6">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
@@ -247,7 +247,7 @@ const AllBooks = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className="px-4  pt-5 border-t bg-muted/20">
+              <div className="px-4  pt-5 border-t">
                 <p className="text-sm text-muted-foreground">
                   Showing {books.length} of {books.length} books
                 </p>
