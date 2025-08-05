@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -36,17 +36,6 @@ const genres = [
 
 const AddBook = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isHeadingVisible, setIsHeadingVisible] = useState(false);
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  useEffect(() => {
-    const headingTimeout = setTimeout(() => setIsHeadingVisible(true), 50);
-    const formTimeout = setTimeout(() => setIsFormVisible(true), 300);
-    return () => {
-      clearTimeout(headingTimeout);
-      clearTimeout(formTimeout);
-    };
-  }, []);
 
   const form = useForm({
     resolver: zodResolver(booksZodSchema),
@@ -65,13 +54,7 @@ const AddBook = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex flex-col items-center justify-center pt-24 pb-32 px-4">
       {/* Animated Heading */}
-      <div
-        className={`text-center transition-all duration-700 ease-out ${
-          isHeadingVisible
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-4"
-        }`}
-      >
+      <div className={`text-center transition-all duration-700 ease-out`}>
         <h1 className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-gray-900 dark:text-white transition-all duration-700 ease-out delay-200">
           Add New Book
         </h1>
@@ -82,11 +65,7 @@ const AddBook = () => {
 
       {/* Animated Form/Card */}
       <div
-        className={`w-full max-w-xl mt-10 transition-all duration-1000 ease-out transform ${
-          isFormVisible
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
-        }`}
+        className={`w-full max-w-xl mt-10 transition-all duration-1000 ease-out transform`}
       >
         <Card className="shadow-xl border-0 pt-14 pb-17 px-2">
           <CardHeader>
