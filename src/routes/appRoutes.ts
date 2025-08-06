@@ -14,11 +14,11 @@ const Router = createBrowserRouter([
         Component: Home,
       },
       {
-        path: "/addBook",
+        path: "/create-book",
         Component: AddBook,
       },
       {
-        path: "/allBooks",
+        path: "/books",
         Component: Allbooks,
       },
     ],

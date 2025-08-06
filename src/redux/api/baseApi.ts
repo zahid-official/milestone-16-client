@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseApi = createApi({
+export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://shelfy-server.vercel.app/api",
+    baseUrl: "http://localhost:3000/api",
   }),
   tagTypes: ["book"],
   endpoints: (builder) => ({
@@ -20,5 +20,3 @@ const baseApi = createApi({
 
 // export endpoint hooks
 export const { useCreateBookMutation } = baseApi;
-
-export default baseApi;

@@ -24,6 +24,12 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import booksZodSchema from "@/schema/booksZodSchema";
 import type z from "zod";
 
+import { toast } from "sonner";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import type { apiErrorResponse } from "@/types/ApiErrorResponse";
+import { useCreateBookMutation } from "@/redux/api/baseApi";
+import { useNavigate } from "react-router";
+
 // genres
 const genres = [
   { label: "Fiction", value: "FICTION" },
@@ -35,25 +41,56 @@ const genres = [
 ];
 
 const AddBook = () => {
+  // state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // useNavigate
+  const navigate = useNavigate();
+
+  // react hook form
   const form = useForm({
     resolver: zodResolver(booksZodSchema),
   });
 
+  // redux endpoint hook
+  const [createBook] = useCreateBookMutation();
+
+  // handle form submission
   const onSubmit: SubmitHandler<z.infer<typeof booksZodSchema>> = async (
     data
   ) => {
     setIsSubmitting(true);
     const submitData = { ...data, available: data.available ?? true };
-    console.log("Submit: ", submitData);
-    setIsSubmitting(false);
-    form.reset();
+
+    try {
+      const res = await createBook(submitData).unwrap();
+      if (res?.success) {
+        toast.success(res.message);
+        form.reset();
+        navigate("/books");
+      }
+    } catch (err) {
+      const apiError = err as FetchBaseQueryError;
+      const errorData = apiError.data as apiErrorResponse;
+
+      // mongodb error
+      if (errorData?.error?.message) {
+        toast.error(errorData.error.message || "An unexpected error occurred");
+      }
+
+      // validation error
+      const validationErrors = errorData?.error?.errors;
+      if (Array.isArray(validationErrors) && validationErrors.length > 0) {
+        toast.error(validationErrors[0].message || "Validation error");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex flex-col items-center justify-center pt-24 pb-32 px-4">
-      {/* Animated Heading */}
+      {/* heading */}
       <div className={`text-center transition-all duration-700 ease-out`}>
         <h1 className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-gray-900 dark:text-white transition-all duration-700 ease-out delay-200">
           Add New Book
@@ -63,7 +100,7 @@ const AddBook = () => {
         </p>
       </div>
 
-      {/* Animated Form/Card */}
+      {/* form */}
       <div
         className={`w-full max-w-xl mt-10 transition-all duration-1000 ease-out transform`}
       >
@@ -260,8 +297,8 @@ const AddBook = () => {
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2" />
-                        Creating Book...
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Creating Book
                       </>
                     ) : (
                       <>
@@ -273,7 +310,7 @@ const AddBook = () => {
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => form.reset()}
+                    onClick={() => navigate("/books")}
                     disabled={isSubmitting}
                     className="flex-1 cursor-pointer bg-transparent"
                   >

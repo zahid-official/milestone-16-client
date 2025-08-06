@@ -14,8 +14,8 @@ export default function Navbar() {
 
   const navItems = [
     { icon: Home, label: "Home", href: "/" },
-    { icon: Library, label: "All Books", href: "/allBooks" },
-    { icon: Plus, label: "Add Book", href: "/addBook" },
+    { icon: Library, label: "All Books", href: "/books" },
+    { icon: Plus, label: "Add Book", href: "/create-book" },
     { icon: FileText, label: "Borrow Summary", href: "borrowSummary" },
   ];
 
