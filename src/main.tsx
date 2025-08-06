@@ -7,13 +7,16 @@ import { Provider } from "react-redux";
 import store from "./redux/store.ts";
 import { ThemeProvider } from "./providers/theme/ThemeProvider.tsx";
 import { Toaster } from "sonner";
+import { TooltipProvider } from "./components/ui/tooltip.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Provider store={store}>
-        <RouterProvider router={Router}></RouterProvider>
-        <Toaster/>
+        <TooltipProvider>
+          <RouterProvider router={Router} />
+          <Toaster />
+        </TooltipProvider>
       </Provider>
     </ThemeProvider>
   </StrictMode>

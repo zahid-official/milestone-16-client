@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { Plus, Pencil, BookOpen, Trash2, LibraryBig } from "lucide-react";
+import { Plus, Pencil, BookOpen, Trash2, LibraryBig, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -11,55 +10,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-interface BookData {
-  id: string;
-  title: string;
-  isbn: string;
-  author: string;
-  genre: string;
-  availableCopies: number;
-  totalCopies: number;
-}
-
-const booksData: BookData[] = [
-  {
-    id: "1",
-    title: "The Great Gatsby",
-    isbn: "978-0-7432-7356-5",
-    author: "F. Scott Fitzgerald",
-    genre: "Classic Literature",
-    availableCopies: 3,
-    totalCopies: 5,
-  },
-  {
-    id: "2",
-    title: "To Kill a Mockingbird",
-    isbn: "978-0-06-112008-4",
-    author: "Harper Lee",
-    genre: "Fiction",
-    availableCopies: 0,
-    totalCopies: 3,
-  },
-  {
-    id: "3",
-    title: "1984",
-    isbn: "978-0-452-28423-4",
-    author: "George Orwell",
-    genre: "Dystopian Fiction",
-    availableCopies: 2,
-    totalCopies: 4,
-  },
-  {
-    id: "4",
-    title: "Pride and Prejudice",
-    isbn: "978-0-14-143951-8",
-    author: "Jane Austen",
-    genre: "Romance",
-    availableCopies: 4,
-    totalCopies: 6,
-  },
-];
+import { Link } from "react-router";
+import { useGetBookQuery } from "@/redux/api/baseApi";
+import type { BookData } from "@/types/bookData";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 // columnsTitle
 const columnsTitle = [
@@ -73,23 +31,14 @@ const columnsTitle = [
 ];
 
 const AllBooks = () => {
-  const [books] = useState<BookData[]>(booksData);
-
-  const totalBooks = books.length;
-  const availableBooksCount = books.reduce(
-    (sum, book) => sum + book.availableCopies,
-    0
-  );
-  const borrowedBooksCount = books.reduce(
-    (sum, book) => sum + (book.totalCopies - book.availableCopies),
-    0
-  );
+  const { data } = useGetBookQuery(undefined);
+  const books = data?.data;
 
   return (
-    <div className="mt-36 bg-background flex items-center justify-center">
+    <div className="mt-36 bg-background flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="w-full max-w-6xl mx-auto space-y-6">
         {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
           <div>
             <h1 className="text-2xl font-bold text-foreground">
               Book Collection
@@ -98,32 +47,12 @@ const AllBooks = () => {
               Manage and organize your library collection
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-4 text-sm">
-              <span className="text-muted-foreground">
-                <span className="font-medium text-foreground">
-                  {totalBooks}
-                </span>{" "}
-                total
-              </span>
-              <span className="text-muted-foreground">
-                <span className="font-medium text-green-600">
-                  {availableBooksCount}
-                </span>{" "}
-                available
-              </span>
-              <span className="text-muted-foreground">
-                <span className="font-medium text-orange-600">
-                  {borrowedBooksCount}
-                </span>{" "}
-                borrowed
-              </span>
-            </div>
+          <Link to={"/create-book"}>
             <Button className="gap-0.5 cursor-pointer">
               <Plus className="h-5 w-5" />
               Add Book
             </Button>
-          </div>
+          </Link>
         </div>
 
         {/* Table Section */}
@@ -135,12 +64,12 @@ const AllBooks = () => {
                   {/* table head */}
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
-                      {columnsTitle?.map((title) => (
+                      {columnsTitle?.map((column) => (
                         <TableHead
-                          key={title.value}
+                          key={column.value}
                           className="text-center text-foreground pb-5"
                         >
-                          {title.label}
+                          {column.label}
                         </TableHead>
                       ))}
                     </TableRow>
@@ -148,9 +77,9 @@ const AllBooks = () => {
 
                   {/* table body */}
                   <TableBody>
-                    {books.map((book) => (
+                    {books?.map((book: BookData) => (
                       <tr
-                        key={book.id}
+                        key={book?._id}
                         className="border-b hover:bg-muted/50 transition-colors cursor-pointer"
                       >
                         {/* title */}
@@ -161,7 +90,7 @@ const AllBooks = () => {
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="font-medium text-sm truncate">
-                                {book.title}
+                                {book?.title}
                               </div>
                             </div>
                           </div>
@@ -169,47 +98,61 @@ const AllBooks = () => {
 
                         {/* author */}
                         <TableCell className="px-4 py-3 text-center">
-                          <div className="text-sm">{book.author}</div>
+                          <div className="text-sm">{book?.author}</div>
                         </TableCell>
+
+                        {/* genre */}
                         <TableCell className="px-4 py-3 text-center">
                           <Badge variant="secondary" className="text-xs">
-                            {book.genre}
+                            {book?.genre}
                           </Badge>
                         </TableCell>
 
                         {/* isbn */}
                         <TableCell className="px-4 py-3 text-center">
                           <div className="text-xs text-muted-foreground font-mono">
-                            {book.isbn}
+                            {book?.isbn}
                           </div>
                         </TableCell>
 
                         {/* copies */}
                         <TableCell className="px-4 py-3 text-center">
-                          <div className="text-sm">{book.totalCopies}</div>
+                          <div className="text-sm">{book?.copies}</div>
                         </TableCell>
 
                         {/* availablity */}
                         <TableCell className="px-4 py-3 text-center">
                           <Badge
                             variant={
-                              book.availableCopies > 0
-                                ? "default"
-                                : "destructive"
+                              book?.available ? "default" : "destructive"
                             }
                             className={`text-xs ${
-                              book.availableCopies > 0
+                              book?.available
                                 ? "bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900 dark:text-green-300"
                                 : ""
                             }`}
                           >
-                            {book.availableCopies} / {book.totalCopies}
+                            {book?.available ? "Available" : "Unavailable"}
                           </Badge>
                         </TableCell>
 
                         {/* actions */}
                         <TableCell className="px-4 py-3 text-right">
                           <div className="flex justify-end gap-2">
+                            {/* view */}
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8 cursor-pointer"
+                                >
+                                  <Eye className="h-4 w-4" />
+                                </Button>
+                              </TooltipTrigger>
+                              <TooltipContent>View Book Details</TooltipContent>
+                            </Tooltip>
+
                             {/* edit */}
                             <Button
                               variant="ghost"
@@ -225,7 +168,7 @@ const AllBooks = () => {
                               variant="ghost"
                               size="icon"
                               className="h-8 w-8  cursor-pointer"
-                              disabled={book.availableCopies === 0}
+                              disabled={!book?.available}
                             >
                               <LibraryBig className="h-4 w-4" />
                               <span className="sr-only">Borrow</span>
@@ -247,9 +190,9 @@ const AllBooks = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className="px-4  pt-5 border-t">
+              <div className="px-4  pt-5 border-t bg-muted/20">
                 <p className="text-sm text-muted-foreground">
-                  Showing {books.length} of {books.length} books
+                  Showing {books?.length} of {books?.length} books
                 </p>
               </div>
             </CardContent>
