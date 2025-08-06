@@ -26,7 +26,7 @@ import type z from "zod";
 
 import { toast } from "sonner";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
-import type { apiErrorResponse } from "@/types/ApiErrorResponse";
+import type { apiErrorResponse } from "@/types/apiErrorResponse";
 import { useCreateBookMutation } from "@/redux/api/baseApi";
 import { useNavigate } from "react-router";
 

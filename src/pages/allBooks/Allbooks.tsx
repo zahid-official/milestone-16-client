@@ -71,7 +71,7 @@ const AllBooks = () => {
         <div>
           <Card className="flex flex-col gap-6 rounded-xl border px-2 shadow-sm">
             <CardContent className="p-0">
-              <div className="overflow-x-auto">
+              <div className="overflow-x-auto min-h-[55vh]">
                 <Table>
                   {/* table head */}
                   <TableHeader>
@@ -154,13 +154,15 @@ const AllBooks = () => {
                             {/* view */}
                             <Tooltip>
                               <TooltipTrigger asChild>
-                                <Button
-                                  variant="ghost"
-                                  size="icon"
-                                  className="h-8 w-8 cursor-pointer"
-                                >
-                                  <Eye className="h-4 w-4" />
-                                </Button>
+                                <Link to={`/books/${book?._id}`}>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 cursor-pointer"
+                                  >
+                                    <Eye className="h-4 w-4" />
+                                  </Button>
+                                </Link>
                               </TooltipTrigger>
                               <TooltipContent>View Book Details</TooltipContent>
                             </Tooltip>

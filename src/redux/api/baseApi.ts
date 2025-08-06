@@ -11,6 +11,9 @@ export const baseApi = createApi({
       query: ({ page, limit }) => `/books?page=${page}&limit=${limit}`,
       providesTags: ["book"],
     }),
+    getBookDetails: builder.query({
+      query: (id) => `/books/${id}`,
+    }),
     createBook: builder.mutation({
       query: (bookData) => ({
         url: "/books",
@@ -23,4 +26,8 @@ export const baseApi = createApi({
 });
 
 // export endpoint hooks
-export const { useCreateBookMutation, useGetBookQuery } = baseApi;
+export const {
+  useCreateBookMutation,
+  useGetBookQuery,
+  useGetBookDetailsQuery,
+} = baseApi;
