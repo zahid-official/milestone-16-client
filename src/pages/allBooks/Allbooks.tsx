@@ -18,6 +18,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import BooksPagination from "./BooksPagination";
+import { useState } from "react";
 
 // columnsTitle
 const columnsTitle = [
@@ -31,12 +33,22 @@ const columnsTitle = [
 ];
 
 const AllBooks = () => {
-  const { data } = useGetBookQuery(undefined);
-  const books = data?.data;
+  const [page, setPage] = useState(1);
+  const limit = 10;
+  const { data } = useGetBookQuery({ page, limit });
+
+  const books = data?.data ?? [];
+  const totalPages = data?.pagination?.totalPages ?? 1;
+
+  // handlePageChange
+  const handlePageChange = (newPage: number) => {
+    if (newPage < 1 || newPage > totalPages) return;
+    setPage(newPage);
+  };
 
   return (
-    <div className="mt-36 bg-background flex items-center justify-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-6xl mx-auto space-y-6">
+    <div className="mt-36 mb-26 bg-background flex items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div className="w-full  max-w-6xl mx-auto space-y-6">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
           <div>
@@ -190,10 +202,12 @@ const AllBooks = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className="px-4  pt-5 border-t bg-muted/20">
-                <p className="text-sm text-muted-foreground">
-                  Showing {books?.length} of {books?.length} books
-                </p>
+              <div className="px-4 pt-5 flex items-center justify-between border-t bg-muted/20">
+                <BooksPagination
+                  currentPage={page}
+                  totalPages={totalPages}
+                  onPageChange={handlePageChange}
+                ></BooksPagination>
               </div>
             </CardContent>
           </Card>
