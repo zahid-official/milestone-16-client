@@ -185,15 +185,34 @@ const AllBooks = () => {
                             </Tooltip>
 
                             {/* borrow */}
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8  cursor-pointer"
-                              disabled={!book?.available}
-                            >
-                              <LibraryBig className="h-4 w-4" />
-                              <span className="sr-only">Borrow</span>
-                            </Button>
+                            {book?.available ? (
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Link to={`/borrow/${book?._id}`}>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-8 w-8 cursor-pointer"
+                                      disabled={!book?.available}
+                                    >
+                                      <LibraryBig className="h-4 w-4" />
+                                      <span className="sr-only">Borrow</span>
+                                    </Button>
+                                  </Link>
+                                </TooltipTrigger>
+                                <TooltipContent>Borrow Book</TooltipContent>
+                              </Tooltip>
+                            ) : (
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-8 w-8 cursor-pointer"
+                                disabled={!book?.available}
+                              >
+                                <LibraryBig className="h-4 w-4" />
+                                <span className="sr-only">Borrow</span>
+                              </Button>
+                            )}
 
                             {/* delete */}
                             <Button

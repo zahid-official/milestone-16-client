@@ -1,10 +1,11 @@
 import MainLayout from "@/layouts/MainLayout";
 import AddBook from "@/pages/addBook/AddBook";
 import Allbooks from "@/pages/allBooks/Allbooks";
-import BookDetails from "@/pages/bookDetails/BookDetails";
+import BookDetails from "@/pages/allBooks/bookDetails/BookDetails";
 import Home from "@/pages/home/Home";
-import UpdateBook from "@/pages/updateBook/UpdateBook";
+import UpdateBook from "@/pages/allBooks/updateBook/UpdateBook";
 import { createBrowserRouter } from "react-router";
+import BorrowBook from "@/pages/allBooks/borrowBook/BorrowBook";
 
 const Router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const Router = createBrowserRouter([
       {
         path: "/edit-book/:id",
         Component: UpdateBook,
+      },
+      {
+        path: "/borrow/:id",
+        Component: BorrowBook,
       },
     ],
   },

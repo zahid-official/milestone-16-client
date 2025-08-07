@@ -64,7 +64,7 @@ const UpdateBook = () => {
     defaultValues: {
       title: "",
       author: "",
-      genre: undefined,
+      genre: bookData?.genre ?? undefined,
       isbn: "",
       copies: 0,
       available: true,
@@ -170,6 +170,8 @@ const UpdateBook = () => {
                       </FormItem>
                     )}
                   />
+
+                  {/* author */}
                   <FormField
                     control={form.control}
                     name="author"
@@ -222,6 +224,8 @@ const UpdateBook = () => {
                       </FormItem>
                     )}
                   />
+
+                  {/* isbn */}
                   <FormField
                     control={form.control}
                     name="isbn"
@@ -269,6 +273,8 @@ const UpdateBook = () => {
                       </FormItem>
                     )}
                   />
+
+                  {/* isbn */}
                   <FormField
                     control={form.control}
                     name="available"
