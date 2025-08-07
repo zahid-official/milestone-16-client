@@ -3,6 +3,7 @@ import AddBook from "@/pages/addBook/AddBook";
 import Allbooks from "@/pages/allBooks/Allbooks";
 import BookDetails from "@/pages/bookDetails/BookDetails";
 import Home from "@/pages/home/Home";
+import UpdateBook from "@/pages/updateBook/UpdateBook";
 import { createBrowserRouter } from "react-router";
 
 const Router = createBrowserRouter([
@@ -25,6 +26,10 @@ const Router = createBrowserRouter([
       {
         path: "/books/:id",
         Component: BookDetails,
+      },
+      {
+        path: "/edit-book/:id",
+        Component: UpdateBook,
       },
     ],
   },

@@ -168,14 +168,21 @@ const AllBooks = () => {
                             </Tooltip>
 
                             {/* edit */}
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 cursor-pointer"
-                            >
-                              <Pencil className="h-4 w-4" />
-                              <span className="sr-only">Edit</span>
-                            </Button>
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <Link to={`/edit-book/${book?._id}`}>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-8 w-8 cursor-pointer"
+                                  >
+                                    <Pencil className="h-4 w-4" />
+                                    <span className="sr-only">Edit</span>
+                                  </Button>
+                                </Link>
+                              </TooltipTrigger>
+                              <TooltipContent>Edit Book Details</TooltipContent>
+                            </Tooltip>
 
                             {/* borrow */}
                             <Button
