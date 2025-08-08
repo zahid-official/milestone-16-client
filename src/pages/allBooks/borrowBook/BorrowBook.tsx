@@ -1,4 +1,4 @@
-import { BookOpen, CalendarIcon, Save, User } from "lucide-react";
+import { BookOpen, CalendarIcon, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,7 +15,10 @@ import {
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
 import { useState } from "react";
-import { useGetBookDetailsQuery } from "@/redux/api/baseApi";
+import {
+  useBorrowBookMutation,
+  useGetBookDetailsQuery,
+} from "@/redux/api/baseApi";
 import {
   Popover,
   PopoverContent,
@@ -27,6 +30,9 @@ import { Calendar } from "@/components/ui/calendar";
 import { zodResolver } from "@hookform/resolvers/zod";
 import borrowZodSchema from "@/schema/borrowZodSchema";
 import type z from "zod";
+import { toast } from "sonner";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { apiErrorResponse } from "@/types/apiErrorResponse";
 
 const BorrowBook = () => {
   // state
@@ -35,6 +41,8 @@ const BorrowBook = () => {
   // redux endpoint hook
   const params = useParams();
   const id = params?.id;
+
+  const [createBorrow] = useBorrowBookMutation();
   const { data } = useGetBookDetailsQuery(id);
   const bookDetails = data?.data;
   const availableBook = bookDetails?.copies;
@@ -48,16 +56,39 @@ const BorrowBook = () => {
   });
 
   // handle form submission
-  const onSubmit: SubmitHandler<z.infer<ReturnType<typeof borrowZodSchema>>> = (
-    data
-  ) => {
+  const onSubmit: SubmitHandler<
+    z.infer<ReturnType<typeof borrowZodSchema>>
+  > = async (data) => {
     setIsSubmitting(true);
     const submitData = {
       ...data,
       book: bookDetails?._id,
     };
-    console.log(submitData);
-    setIsSubmitting(false);
+
+    try {
+      const res = await createBorrow(submitData).unwrap();
+      if (res?.success) {
+        toast.success(res.message);
+        form.reset();
+        navigate("/books");
+      }
+    } catch (err) {
+      const apiError = err as FetchBaseQueryError;
+      const errorData = apiError.data as apiErrorResponse;
+
+      // mongodb error
+      if (errorData?.error?.message) {
+        toast.error(errorData.error.message || "An unexpected error occurred");
+      }
+
+      // validation error
+      const validationErrors = errorData?.error?.errors;
+      if (Array.isArray(validationErrors) && validationErrors.length > 0) {
+        toast.error(validationErrors[0].message || "Validation error");
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -247,7 +278,7 @@ const BorrowBook = () => {
                       </>
                     ) : (
                       <>
-                        <Save className="w-4 h-4" />
+                        <BookOpen className="w-4 h-4" />
                         Create Book
                       </>
                     )}
