@@ -9,10 +9,10 @@ import {
 
 export default function Banner() {
   return (
-    <section className="py-32 relative overflow-hidden">
+    <section className="py-32 relative overflow-hidden bg-gray-50 dark:bg-black">
       <div className="container  max-w-6xl mx-auto">
         <div className="transition-all duration-700 ease-out opacity-100 translate-x-0 translate-y-0">
-          <div className="relative overflow-hidden rounded-3xl bg-black px-8 py-16 text-center text-white shadow-2xl">
+          <div className="relative overflow-hidden rounded-3xl dark:border bg-black px-8 py-16 text-center text-white shadow-2xl">
             {/* Dotted pattern overlay */}
             <div
               className="absolute inset-0 opacity-30"

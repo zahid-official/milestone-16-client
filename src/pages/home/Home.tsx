@@ -1,6 +1,7 @@
 import Banner from "./footerBanner/Banner";
 import HeroSecton from "./heroSection/HeroSecton";
 import ManageSection from "./manageSection/ManageSection";
+import RankedBooks from "./rankedBooks/RankedBooks";
 
 const Home = () => {
   return (
@@ -13,6 +14,11 @@ const Home = () => {
       {/* manage section */}
       <section>
         <ManageSection></ManageSection>
+      </section>
+
+      {/* ranked books section */}
+      <section>
+        <RankedBooks></RankedBooks>
       </section>
 
       {/* banner */}

@@ -22,7 +22,9 @@ const ManageSection = () => {
         <div
           ref={featureRef}
           className={`text-center transition-all duration-700 ease-out ${
-            featureVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+            featureVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-8"
           }`}
         >
           <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-6 leading-14 max-w-4xl mx-auto">
