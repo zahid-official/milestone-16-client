@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 
 import { useState } from "react";
@@ -16,7 +14,7 @@ export default function Navbar() {
     { icon: Home, label: "Home", href: "/" },
     { icon: Library, label: "All Books", href: "/books" },
     { icon: Plus, label: "Add Book", href: "/create-book" },
-    { icon: ChartColumn, label: "Borrow Summary", href: "borrowSummary" },
+    { icon: ChartColumn, label: "Borrow Summary", href: "/borrow-summary" },
   ];
 
   return (
