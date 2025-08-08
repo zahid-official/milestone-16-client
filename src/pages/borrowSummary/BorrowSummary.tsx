@@ -1,8 +1,5 @@
-import * as React from "react";
 import { BookOpen, UsersRound, TrendingUp, BarChart3 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-import { Badge } from "@/components/ui/badge";
 import {
   Table,
   TableBody,
@@ -11,6 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useEffect, useState } from "react";
+import { useBorrowSummaryQuery } from "@/redux/api/baseApi";
+import type { BorrowData } from "@/types/borrowData";
 
 type Metric = {
   title: string;
@@ -19,27 +19,40 @@ type Metric = {
   icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
 };
 
-export default function BorrowSummaryPage() {
-  const [isVisible, setIsVisible] = React.useState(false);
+const BorrowSummaryPage = () => {
+  const [isVisible, setIsVisible] = useState(false);
 
-  // Demo data (replace with real data if needed)
+  // redux endpoint hook
+  const { data } = useBorrowSummaryQuery(undefined);
+  const borrowedBooks = data?.data;
+  const popularBook = borrowedBooks?.reduce(
+    (max: BorrowData, current: BorrowData) =>
+      current.totalQuantity > max.totalQuantity ? current : max
+  );
+
+  // metrics stats
   const metrics: Metric[] = [
     {
       title: "Books in Circulation",
-      value: 2,
+      value: borrowedBooks?.length,
       subtitle: "Different titles borrowed",
       icon: BookOpen,
     },
+
     {
       title: "Total Copies Borrowed",
-      value: 5,
+      value: borrowedBooks?.reduce(
+        (acc: number, item: BorrowData) => acc + item.totalQuantity,
+        0
+      ),
       subtitle: "Across all books",
       icon: UsersRound,
     },
+
     {
-      title: "Most Popular",
-      value: 3,
-      subtitle: "To Kill a Mockingbird",
+      title: "Most Borrowed Book",
+      value: popularBook?.totalQuantity,
+      subtitle: popularBook?.book?.title,
       icon: TrendingUp,
     },
   ];
@@ -48,34 +61,18 @@ export default function BorrowSummaryPage() {
   const columnsTitle = [
     { label: "Book Title", value: "title" },
     { label: "ISBN", value: "isbn" },
-    { label: "Total Quantity Borrowed", value: "quantity" },
-    { label: "Popularity", value: "popularity" },
+    { label: "Borrowed Quantity", value: "quantity" },
   ];
 
-  const rows = [
-    {
-      title: "To Kill a Mockingbird",
-      isbn: "978-0-06-112008-4",
-      total: 3,
-      popularity: { label: "Most Popular", rank: 1 },
-    },
-    {
-      title: "The Great Gatsby",
-      isbn: "978-0-7432-7356-5",
-      total: 2,
-      popularity: { label: "2nd Most", rank: 2 },
-    },
-  ];
-
-  // Trigger animations on mount
-  React.useEffect(() => {
+  //useEffect trigger animations on mount
+  useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <main className="min-h-screen w-full bg-white">
-      <div className="container mx-auto max-w-5xl px-4 md:px-8 py-12 md:py-16">
+      <div className="container mx-auto max-w-4xl px-4 md:px-8 py-12 md:py-16">
         {/* Heading */}
         <section
           className={`text-center space-y-3 mb-10 transition-all duration-700 ease-out ${
@@ -91,33 +88,33 @@ export default function BorrowSummaryPage() {
         </section>
 
         {/* Metric Cards */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mx-auto max-w-4xl">
-          {metrics.map((m, i) => {
-            const Icon = m.icon;
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mx-auto max-w-4xl">
+          {metrics.map((metric, i) => {
+            const Icon = metric.icon;
             return (
               <div
-                key={m.title}
-                className={`transition-all duration-700 ease-out hover:-translate-y-1 hover:shadow-md ${
+                key={metric.title}
+                className={`transition-all duration-300 ease-out hover:-translate-y-1 cursor-pointer ${
                   isVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-6"
                 }`}
                 style={{ transitionDelay: `${i * 100}ms` }}
               >
-                <Card className="border border-neutral-200 bg-white rounded-xl shadow-sm transition-all duration-300">
-                  <CardContent className="px-5 cursor-pointer">
+                <Card className="border border-neutral-200 bg-white rounded-xl">
+                  <CardContent className="px-5">
                     <div className="flex justify-between">
-                      <p className="text-sm text-neutral-600">{m.title}</p>
+                      <p className="text-sm text-neutral-600">{metric.title}</p>
                       <div className="rounded-md border border-neutral-200 bg-neutral-50 p-2 text-neutral-500">
                         <Icon className="h-4 w-4" />
                       </div>
                     </div>
                     <div className="-mt-1">
                       <div className="text-2xl md:text-3xl font-semibold text-black tabular-nums">
-                        {m.value}
+                        {metric.value}
                       </div>
                       <p className="text-sm pt-2 text-neutral-500">
-                        {m.subtitle}
+                        {metric.subtitle}
                       </p>
                     </div>
                   </CardContent>
@@ -134,12 +131,12 @@ export default function BorrowSummaryPage() {
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <Card className="mx-auto max-w-4xl rounded-2xl border gap-3 border-neutral-200 bg-white shadow-sm">
+          <Card className="mx-auto max-w-4xl pb-7.5 rounded-2xl border gap-3 border-neutral-200 bg-white shadow-sm">
             <CardHeader className="">
               <div className="flex items-center gap-2">
                 <BarChart3 className="h-5 w-5 text-neutral-800" />
                 <CardTitle className="text-base md:text-lg font-semibold text-neutral-900">
-                  {"Borrowing Summary (2)"}
+                  {"Borrowing Summary"}
                 </CardTitle>
               </div>
             </CardHeader>
@@ -164,9 +161,9 @@ export default function BorrowSummaryPage() {
 
                   {/* table body */}
                   <TableBody>
-                    {rows?.map((book: BookData) => (
+                    {borrowedBooks?.map((borrowedBook: BorrowData) => (
                       <tr
-                        key={book?._id}
+                        key={borrowedBook?.book?.isbn}
                         className="border-b hover:bg-muted/50 transition-colors cursor-pointer"
                       >
                         {/* title */}
@@ -177,7 +174,7 @@ export default function BorrowSummaryPage() {
                             </div>
                             <div className="min-w-0 flex-1">
                               <div className="font-medium text-sm truncate">
-                                {book?.title}
+                                {borrowedBook?.book?.title}
                               </div>
                             </div>
                           </div>
@@ -186,29 +183,15 @@ export default function BorrowSummaryPage() {
                         {/* isbn */}
                         <TableCell className="px-4 py-3 text-center">
                           <div className="text-xs text-muted-foreground font-mono">
-                            {book?.isbn}
+                            {borrowedBook?.book?.isbn}
                           </div>
                         </TableCell>
 
-                        {/* copies */}
+                        {/* total quantity */}
                         <TableCell className="px-4 py-3 text-center">
-                          <div className="text-sm">5</div>
-                        </TableCell>
-
-                        {/* availablity */}
-                        <TableCell className="px-4 py-3 text-center">
-                          <Badge
-                            variant={
-                              book?.available ? "default" : "destructive"
-                            }
-                            className={`text-xs ${
-                              book?.available
-                                ? "bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900 dark:text-green-300"
-                                : ""
-                            }`}
-                          >
-                            {book?.available ? "Available" : "Unavailable"}
-                          </Badge>
+                          <div className="text-sm">
+                            {borrowedBook?.totalQuantity}
+                          </div>
                         </TableCell>
                       </tr>
                     ))}
@@ -221,4 +204,6 @@ export default function BorrowSummaryPage() {
       </div>
     </main>
   );
-}
+};
+
+export default BorrowSummaryPage;
