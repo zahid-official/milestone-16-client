@@ -1,4 +1,4 @@
-import { Plus, Pencil, BookOpen, Trash2, LibraryBig, Eye } from "lucide-react";
+import { Plus, Pencil, BookOpen, LibraryBig, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/tooltip";
 import BooksPagination from "./BooksPagination";
 import { useState } from "react";
+import DeleteBook from "./deleteBook/DeleteBook";
 
 // columnsTitle
 const columnsTitle = [
@@ -215,14 +216,7 @@ const AllBooks = () => {
                             )}
 
                             {/* delete */}
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-8 w-8 cursor-pointer"
-                            >
-                              <Trash2 className="h-4 w-4 text-red-600" />
-                              <span className="sr-only">Delete</span>
-                            </Button>
+                            <DeleteBook bookId={book?._id}></DeleteBook>
                           </div>
                         </TableCell>
                       </tr>
