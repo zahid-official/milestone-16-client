@@ -18,7 +18,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { BookOpen, Save } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import booksZodSchema from "@/schema/booksZodSchema";
@@ -302,7 +302,7 @@ const AddBook = () => {
                       </>
                     ) : (
                       <>
-                        <Save className="w-4 h-4" />
+                        <BookOpen className="w-4 h-4" />
                         Create Book
                       </>
                     )}

@@ -25,7 +25,7 @@ import booksZodSchema from "@/schema/booksZodSchema";
 import type { apiErrorResponse } from "@/types/apiErrorResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { BookOpen, Save } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useNavigate, useParams } from "react-router";
@@ -339,7 +339,7 @@ const UpdateBook = () => {
                       </>
                     ) : (
                       <>
-                        <Save className="w-4 h-4" />
+                        <BookOpen className="w-4 h-4" />
                         Update Book
                       </>
                     )}

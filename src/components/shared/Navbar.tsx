@@ -3,7 +3,7 @@
 import React from "react";
 
 import { useState } from "react";
-import { BookOpen, Home, Library, Plus, FileText, Menu } from "lucide-react";
+import { BookOpen, Home, Library, Plus, Menu, ChartColumn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "react-router";
@@ -16,7 +16,7 @@ export default function Navbar() {
     { icon: Home, label: "Home", href: "/" },
     { icon: Library, label: "All Books", href: "/books" },
     { icon: Plus, label: "Add Book", href: "/create-book" },
-    { icon: FileText, label: "Borrow Summary", href: "borrowSummary" },
+    { icon: ChartColumn, label: "Borrow Summary", href: "borrowSummary" },
   ];
 
   return (
