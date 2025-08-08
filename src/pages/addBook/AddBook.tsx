@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -42,6 +42,7 @@ const genres = [
 
 const AddBook = () => {
   // state
+  const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // redux endpoint hook
@@ -88,10 +89,20 @@ const AddBook = () => {
     }
   };
 
+  //useEffect trigger animations on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex flex-col items-center justify-center pt-24 pb-32 px-4">
       {/* heading */}
-      <div className={`text-center transition-all duration-700 ease-out`}>
+      <div
+        className={`text-center space-y-3 transition-all duration-700 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+      >
         <h1 className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-gray-900 dark:text-white transition-all duration-700 ease-out delay-200">
           Add New Book
         </h1>
@@ -102,7 +113,10 @@ const AddBook = () => {
 
       {/* form */}
       <div
-        className={`w-full max-w-xl mt-10 transition-all duration-1000 ease-out transform`}
+        className={`w-full max-w-xl mt-8 transition-all duration-700 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
+        style={{ transitionDelay: "250ms" }}
       >
         <Card className="shadow-xl border-0 pt-14 pb-17 px-2">
           <CardHeader>

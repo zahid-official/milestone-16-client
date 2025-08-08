@@ -20,6 +20,7 @@ type Metric = {
 };
 
 const BorrowSummaryPage = () => {
+  // state
   const [isVisible, setIsVisible] = useState(false);
 
   // redux endpoint hook
