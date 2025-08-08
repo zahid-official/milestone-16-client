@@ -44,6 +44,9 @@ const AddBook = () => {
   // state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // redux endpoint hook
+  const [createBook] = useCreateBookMutation();
+
   // useNavigate
   const navigate = useNavigate();
 
@@ -51,9 +54,6 @@ const AddBook = () => {
   const form = useForm({
     resolver: zodResolver(booksZodSchema),
   });
-
-  // redux endpoint hook
-  const [createBook] = useCreateBookMutation();
 
   // handle form submission
   const onSubmit: SubmitHandler<z.infer<typeof booksZodSchema>> = async (

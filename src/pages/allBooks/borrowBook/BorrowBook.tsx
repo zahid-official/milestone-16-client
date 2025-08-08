@@ -1,51 +1,68 @@
-"use client";
-
-import { useState } from "react";
-import { BookOpen, User, Calendar } from "lucide-react";
+import { BookOpen, CalendarIcon, Save, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { useNavigate, useParams } from "react-router";
+import { useState } from "react";
+import { useGetBookDetailsQuery } from "@/redux/api/baseApi";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
+import { zodResolver } from "@hookform/resolvers/zod";
+import borrowZodSchema from "@/schema/borrowZodSchema";
+import type z from "zod";
 
 const BorrowBook = () => {
-  const [borrowerName, setBorrowerName] = useState("");
-  const [email, setEmail] = useState("");
-  const [quantity, setQuantity] = useState("1");
-  const [dueDate, setDueDate] = useState("2025-08-21");
+  // state
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const bookDetails = {
-    title: "The Great Gatsby",
-    author: "F. Scott Fitzgerald",
-    genre: "Classic Literature",
-    isbn: "978-0-7432-7356-5",
-    available: 3,
-    total: 5,
-  };
+  // redux endpoint hook
+  const params = useParams();
+  const id = params?.id;
+  const { data } = useGetBookDetailsQuery(id);
+  const bookDetails = data?.data;
+  const availableBook = bookDetails?.copies;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Form submitted:", {
-      borrowerName,
-      email,
-      quantity,
-      dueDate,
-      book: bookDetails.title,
-    });
-  };
+  // useNavigate
+  const navigate = useNavigate();
 
-  const formatDisplayDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+  // react hook form
+  const form = useForm({
+    resolver: zodResolver(borrowZodSchema(availableBook)),
+  });
+
+  // handle form submission
+  const onSubmit: SubmitHandler<z.infer<ReturnType<typeof borrowZodSchema>>> = (
+    data
+  ) => {
+    setIsSubmitting(true);
+    const submitData = {
+      ...data,
+      book: bookDetails?._id,
+    };
+    console.log(submitData);
+    setIsSubmitting(false);
   };
 
   return (
     <div className="pt-22 pb-32 bg-white flex items-center justify-center p-4">
-      <div className="w-full max-w-2xl mx-auto space-y-6">
+      <div className="w-full max-w-lg mx-auto space-y-6">
         {/* page header */}
         <div className="text-center">
           <h1 className="text-4xl font-bold text-black">Borrow Book</h1>
@@ -55,7 +72,7 @@ const BorrowBook = () => {
         </div>
 
         {/* book details */}
-        <Card className="border border-border gap-3 rounded-xl shadow-sm">
+        <Card className="border px-3 py-9 border-border gap-3 rounded-xl shadow-sm mb-9">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl font-semibold">
               <BookOpen className="-mb-1" />
@@ -63,7 +80,7 @@ const BorrowBook = () => {
             </CardTitle>
           </CardHeader>
 
-          {/* details */}
+          {/* details section */}
           <CardContent className="space-y-4">
             {/* title & author */}
             <div className="grid gap-4 md:grid-cols-2">
@@ -71,7 +88,7 @@ const BorrowBook = () => {
                 <Label className="text-sm font-medium text-muted-foreground">
                   Title
                 </Label>
-                <p className="font-medium">{bookDetails.title}</p>
+                <p className="font-medium">{bookDetails?.title}</p>
               </div>
 
               {/* author */}
@@ -79,7 +96,7 @@ const BorrowBook = () => {
                 <Label className="text-sm font-medium text-muted-foreground">
                   Author
                 </Label>
-                <p>{bookDetails.author}</p>
+                <p>{bookDetails?.author}</p>
               </div>
             </div>
 
@@ -90,7 +107,7 @@ const BorrowBook = () => {
                   Genre
                 </Label>
                 <Badge variant="secondary" className="mt-1 w-fit">
-                  {bookDetails.genre}
+                  {bookDetails?.genre}
                 </Badge>
               </div>
 
@@ -99,7 +116,7 @@ const BorrowBook = () => {
                 <Label className="text-sm font-medium text-muted-foreground">
                   ISBN
                 </Label>
-                <p className="font-mono text-sm mt-0.5">{bookDetails.isbn}</p>
+                <p className="font-mono text-sm mt-0.5">{bookDetails?.isbn}</p>
               </div>
             </div>
 
@@ -109,11 +126,14 @@ const BorrowBook = () => {
                 <Label className="text-sm font-medium text-muted-foreground">
                   Copies
                 </Label>
-                <p className="ml-4">{bookDetails.available}</p>
+                <p className="ml-4">{bookDetails?.copies}</p>
               </div>
 
               {/* available */}
               <div>
+                <Label className="text-sm mb-0.5 -mt-0.5 font-medium text-muted-foreground">
+                  Status
+                </Label>
                 <Badge
                   variant={bookDetails?.available ? "default" : "destructive"}
                   className={`text-xs ${
@@ -130,126 +150,120 @@ const BorrowBook = () => {
         </Card>
 
         {/* borrowing information */}
-        <Card className="border border-border rounded-xl shadow-sm">
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center gap-2 text-lg font-semibold">
-              <User className="h-5 w-5" />
+        <Card className="border border-border  px-3 py-9 rounded-xl shadow-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-1 text-xl font-semibold">
+              <User className="-mb-1" />
               Borrowing Information
             </CardTitle>
           </CardHeader>
+
+          {/* form */}
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="borrowerName" className="text-sm font-medium">
-                    Borrower Name <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="borrowerName"
-                    placeholder="Enter your full name"
-                    required
-                    value={borrowerName}
-                    onChange={(e) => setBorrowerName(e.target.value)}
-                    className="h-9"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="borrowerEmail"
-                    className="text-sm font-medium"
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
+                {/* quantity  */}
+                <FormField
+                  control={form.control}
+                  name="quantity"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Quantity to borrow
+                        <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          placeholder="Enter quantity to borrow"
+                          {...field}
+                          value={
+                            field.value !== undefined ? Number(field.value) : ""
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* due date */}
+                <FormField
+                  control={form.control}
+                  name="dueDate"
+                  render={({ field }) => (
+                    <FormItem className="flex flex-col">
+                      <FormLabel>
+                        Due date to return
+                        <span className="text-red-500">*</span>
+                      </FormLabel>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <FormControl>
+                            <Button
+                              variant={"outline"}
+                              className={cn(
+                                "pl-3 text-left font-normal",
+                                !field.value && "text-muted-foreground"
+                              )}
+                            >
+                              {field.value ? (
+                                format(field.value, "PPP")
+                              ) : (
+                                <span>Pick a due date to return the book</span>
+                              )}
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            </Button>
+                          </FormControl>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 py-2.5">
+                  <Button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="flex-1 cursor-pointer"
                   >
-                    Email Address <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="borrowerEmail"
-                    placeholder="Enter your email"
-                    required
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="h-9"
-                  />
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        Creating Book
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-4 h-4" />
+                        Create Book
+                      </>
+                    )}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => navigate("/books")}
+                    disabled={isSubmitting}
+                    className="flex-1 cursor-pointer bg-transparent"
+                  >
+                    Cancel
+                  </Button>
                 </div>
-              </div>
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="quantity" className="text-sm font-medium">
-                    Quantity <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="quantity"
-                    min="1"
-                    max="3"
-                    placeholder="Number of copies"
-                    required
-                    type="number"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                    className="h-9"
-                  />
-                  <p className="text-sm text-muted-foreground">
-                    Maximum 3 copies available
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="dueDate" className="text-sm font-medium">
-                    Due Date <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="dueDate"
-                    required
-                    type="date"
-                    value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
-                    className="h-9"
-                  />
-                </div>
-              </div>
-
-              {/* Borrowing Summary */}
-              <div className="bg-muted/50 p-4 rounded-lg">
-                <h4 className="font-medium mb-2 flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  Borrowing Summary
-                </h4>
-                <div className="space-y-1 text-sm">
-                  <div className="flex justify-between">
-                    <span>Book:</span>
-                    <span className="font-medium">{bookDetails.title}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Quantity:</span>
-                    <span className="font-medium">{quantity} copy</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Due Date:</span>
-                    <span className="font-medium">
-                      {formatDisplayDate(dueDate)}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex gap-4 pt-6">
-                <Button
-                  type="submit"
-                  className="flex-1 h-9"
-                  disabled={!borrowerName || !email}
-                >
-                  <BookOpen className="h-4 w-4 mr-2" />
-                  Confirm Borrow
-                </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="flex-1 h-9"
-                  onClick={() => window.history.back()}
-                >
-                  Cancel
-                </Button>
-              </div>
-            </form>
+              </form>
+            </Form>
           </CardContent>
         </Card>
       </div>
