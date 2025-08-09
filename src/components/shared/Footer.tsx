@@ -27,7 +27,8 @@ export default function Footer() {
                 </span>
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                A modern, minimal library system to effortlessly organize and manage your book collection.
+                A modern, minimal library system to effortlessly organize and
+                manage your book collection.
               </p>
               <div className="flex space-x-4">
                 {[Github, Twitter, Instagram, Linkedin].map((Icon, index) => (
@@ -44,45 +45,57 @@ export default function Footer() {
 
             {/* Platform Links */}
             <div>
-              <h3 className="text-sm font-semibold text-black dark:text-white mb-4">Platform</h3>
+              <h3 className="text-sm font-semibold text-black dark:text-white mb-4">
+                Platform
+              </h3>
               <ul className="space-y-3">
-                {["Member Portal", "Lending System", "Book Management", "Analytics Dashboard"].map(
-                  (item, idx) => (
-                    <li key={idx}>
-                      <Link
-                        to="#"
-                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  )
-                )}
+                {[
+                  "Member Portal",
+                  "Lending System",
+                  "Book Management",
+                  "Analytics Dashboard",
+                ].map((item, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to="#"
+                      className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Resources Links */}
             <div>
-              <h3 className="text-sm font-semibold text-black dark:text-white mb-4">Resources</h3>
+              <h3 className="text-sm font-semibold text-black dark:text-white mb-4">
+                Resources
+              </h3>
               <ul className="space-y-3">
-                {["Best Practices", "Training Materials", "Library Setup Guide", "Librarian Community"].map(
-                  (item, idx) => (
-                    <li key={idx}>
-                      <Link
-                        to="#"
-                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
-                      >
-                        {item}
-                      </Link>
-                    </li>
-                  )
-                )}
+                {[
+                  "Best Practices",
+                  "Training Materials",
+                  "Library Setup Guide",
+                  "Librarian Community",
+                ].map((item, idx) => (
+                  <li key={idx}>
+                    <Link
+                      to="#"
+                      className="text-sm text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
             {/* Support Section */}
             <div>
-              <h3 className="text-sm font-semibold text-black dark:text-white mb-4">Support</h3>
+              <h3 className="text-sm font-semibold text-black dark:text-white mb-4">
+                Support
+              </h3>
               <ul className="space-y-3">
                 <li>
                   <Link
@@ -102,11 +115,15 @@ export default function Footer() {
                 </li>
                 <li className="flex items-center space-x-3">
                   <Phone className="h-4 w-4 text-gray-400 dark:text-gray-300" />
-                  <span className="text-sm text-gray-600 dark:text-gray-400">1-800-SHELFY-1</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    1-800-SHELFY-1
+                  </span>
                 </li>
                 <li className="flex items-center space-x-3">
                   <Mail className="h-4 w-4 text-gray-400 dark:text-gray-300" />
-                  <span className="text-sm text-gray-600 dark:text-gray-400">support@shelfy.com</span>
+                  <span className="text-sm text-gray-600 dark:text-gray-400">
+                    support@shelfy.com
+                  </span>
                 </li>
               </ul>
             </div>
