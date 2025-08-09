@@ -43,6 +43,7 @@ const Features = ({ isVisible }: IProps) => {
       ],
     },
   ];
+
   return (
     <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mt-12">
       {features.map((feature, index) => {

@@ -18,7 +18,7 @@ const Home = () => {
 
       {/* ranked books section */}
       <section>
-        {/* <RankedBooks></RankedBooks> */}
+        <RankedBooks></RankedBooks>
       </section>
 
       {/* banner */}

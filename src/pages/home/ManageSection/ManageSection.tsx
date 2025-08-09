@@ -16,7 +16,7 @@ const ManageSection = () => {
   });
 
   return (
-    <section className="flex items-center justify-center lg:py-30 py-22 px-6 bg-gray-50 dark:bg-black">
+    <div className="flex items-center justify-center lg:py-30 py-22 px-6 bg-gray-50 dark:bg-black">
       <div className="max-w-6xl mx-auto w-full">
         {/* Header section */}
         <div
@@ -44,7 +44,7 @@ const ManageSection = () => {
           <Services isVisible={serviceVisible} />
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
