@@ -23,7 +23,7 @@ const Home = () => {
 
       {/* banner */}
       <section>
-        {/* <Banner></Banner> */}
+        <Banner></Banner>
       </section>
     </div>
   );
