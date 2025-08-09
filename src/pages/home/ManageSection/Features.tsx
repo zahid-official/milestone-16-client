@@ -44,13 +44,13 @@ const Features = ({ isVisible }: IProps) => {
     },
   ];
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
+    <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mt-12">
       {features.map((feature, index) => {
         const Icon = feature.icon;
         return (
           <div
             key={feature.title}
-            className={`transition-all duration-700 ease-out transform ${
+            className={`transition-all duration-700 ease-out transform md:max-w-md max-w-sm mx-auto ${
               isVisible
                 ? "opacity-100 translate-y-0"
                 : "opacity-0 translate-y-8"

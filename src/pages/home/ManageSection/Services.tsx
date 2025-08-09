@@ -25,14 +25,14 @@ const Services = ({ isVisible }: IProps) => {
       iconColor: "text-blue-500",
       title: "Mobile Optimized",
       description:
-        "Perfect experience across all devices with responsive design and touch-friendly interface.",
+        "Perfect experience across all devices with responsive design friendly interface.",
     },
   ];
 
   return (
-    <div className="flex items-center justify-center bg-gray-50 dark:bg-black/40 pt-24 pb-5">
+    <div className="flex items-center justify-center bg-gray-50 dark:bg-black/40 pt-18 pb-5">
       <div className="w-full max-w-7xl mx-auto">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-3 sm:grid-cols-2">
           {services.map((service, index) => {
             const Icon = service.icon;
 
@@ -40,7 +40,7 @@ const Services = ({ isVisible }: IProps) => {
               <div
                 key={index}
                 className={`
-                  transition-all duration-700 ease-out transform
+                  transition-all duration-700 ease-out transform sm:max-w-full max-w-80 mx-auto
                   ${
                     isVisible
                       ? "opacity-100 translate-y-0"

@@ -16,7 +16,7 @@ const ManageSection = () => {
   });
 
   return (
-    <section className="min-h-screen flex items-center justify-center py-28 px-4 bg-gray-50 dark:bg-black">
+    <section className="flex items-center justify-center lg:py-30 py-22 px-6 bg-gray-50 dark:bg-black">
       <div className="max-w-6xl mx-auto w-full">
         {/* Header section */}
         <div
@@ -27,8 +27,8 @@ const ManageSection = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-6 leading-14 max-w-4xl mx-auto">
-            Everything You Need to Manage Your Library
+          <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-4 lg:leading-12 max-w-4xl mx-auto">
+            Everything You Need to <br className="lg:block hidden" /> Manage Your Library
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Powerful features designed to make library management effortless,

@@ -13,7 +13,7 @@ const Home = () => {
 
       {/* manage section */}
       <section>
-        {/* <ManageSection></ManageSection> */}
+        <ManageSection></ManageSection>
       </section>
 
       {/* ranked books section */}
