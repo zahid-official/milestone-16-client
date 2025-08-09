@@ -12,14 +12,14 @@ const ShelfyActivity = () => {
     return () => clearTimeout(timeout);
   }, []);
   return (
-    <div className="max-w-md mx-auto flex-1">
+    <div className="lg:max-w-md max-w-lg w-full mx-auto flex-1">
       <div
         className={`transition-all duration-1000 ease-out ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
         <Card className="w-full bg-white dark:bg-[#111] shadow-lg border border-gray-200 dark:border-gray-800 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-500">
-          <CardContent className="p-8 space-y-6">
+          <CardContent className="sm:p-8 px-6 py-4 space-y-6">
             {/* Header */}
             <div className="flex items-center gap-3">
               <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:scale-105 hover:rotate-2 will-change-transform transform-gpu origin-center">

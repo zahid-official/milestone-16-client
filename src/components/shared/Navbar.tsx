@@ -18,7 +18,7 @@ export default function Navbar() {
   ];
 
   return (
-    <div className="container mx-auto max-w-6xl px-4">
+    <div className="container mx-auto max-w-6xl px-6">
       <div className="flex h-18 items-center justify-between">
         {/* logo */}
         <Link to={"/"}>
@@ -57,7 +57,7 @@ export default function Navbar() {
         </div>
 
         {/* right side */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center">
           {/* theme toggle */}
           <div className="cursor-pointer">
             <ModeToggler></ModeToggler>

@@ -13,17 +13,17 @@ const Home = () => {
 
       {/* manage section */}
       <section>
-        <ManageSection></ManageSection>
+        {/* <ManageSection></ManageSection> */}
       </section>
 
       {/* ranked books section */}
       <section>
-        <RankedBooks></RankedBooks>
+        {/* <RankedBooks></RankedBooks> */}
       </section>
 
       {/* banner */}
       <section>
-        <Banner></Banner>
+        {/* <Banner></Banner> */}
       </section>
     </div>
   );

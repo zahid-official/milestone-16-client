@@ -21,10 +21,10 @@ const Intro = () => {
   }, []);
 
   return (
-    <div className="flex-1 mx-auto max-w-2xl">
+    <div className="flex-1 mx-auto max-w-2xl sm:text-left text-center">
       {/* Brand Header */}
       <div
-        className={`transform flex items-center space-x-2 transition-all duration-700 ease-out ${
+        className={`transform flex items-center sm:justify-start justify-center space-x-2 transition-all duration-700 ease-out ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
         }`}
       >
@@ -87,25 +87,25 @@ const Intro = () => {
 
       {/* Stats */}
       <div
-        className={`transform grid grid-cols-2 gap-8 pt-8 transition-all duration-700 ease-out delay-1000 sm:grid-cols-4 ${
+        className={`transform grid sm:grid-cols-4 grid-cols-2 gap-8 pt-8 transition-all duration-700 ease-out delay-1000 ${
           isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
         {stats.map((stat, index) => (
           <div
             key={stat.label}
-            className={`transform text-left transition-all duration-500 ease-out ${
+            className={`transform sm:text-left text-center transition-all duration-500 ease-out ${
               isVisible ? "opacity-100" : "opacity-0"
             }`}
             style={{
               transitionDelay: `${1200 + index * 100}ms`,
             }}
           >
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center sm:justify-start justify-center space-x-1">
               {stat.icon && (
                 <stat.icon className="h-5 w-5 fill-black text-black dark:fill-white dark:text-white" />
               )}
-              <div className="text-2xl font-bold text-gray-900 dark:text-white sm:text-3xl">
+              <div className="text-2xl text-center font-bold text-gray-900 dark:text-white sm:text-3xl">
                 {stat.value}
               </div>
             </div>
