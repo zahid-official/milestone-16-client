@@ -37,7 +37,7 @@ const AllBooks = () => {
   // state
   const [page, setPage] = useState(1);
   const limit = 10;
-  const { data, isLoading } = useGetBookQuery({ page, limit });
+  const { data } = useGetBookQuery({ page, limit });
 
   const books = data?.data ?? [];
   const totalPages = data?.pagination?.totalPages ?? 1;
@@ -50,14 +50,6 @@ const AllBooks = () => {
 
   return (
     <>
-      {/* manage loading */}
-      {isLoading && (
-        <div className="flex justify-center items-center py-6">
-          <div className="w-8 h-8 border-5 border-black/30 border-t-black dark:border-white/30 dark:border-t-white rounded-full animate-spin" />
-        </div>
-      )}
-
-      {/* loaded data */}
       <div className="pt-18 lg:pb-30 pb-24 px-6 bg-background flex items-center justify-center">
         <div className="w-full  max-w-6xl mx-auto space-y-6">
           {/* Header Section */}
