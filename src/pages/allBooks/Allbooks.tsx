@@ -37,7 +37,7 @@ const AllBooks = () => {
   // state
   const [page, setPage] = useState(1);
   const limit = 10;
-  const { data } = useGetBookQuery({ page, limit });
+  const { data, isLoading } = useGetBookQuery({ page, limit });
 
   const books = data?.data ?? [];
   const totalPages = data?.pagination?.totalPages ?? 1;
@@ -49,221 +49,236 @@ const AllBooks = () => {
   };
 
   return (
-    <div className="pt-18 lg:pb-30 pb-24 px-6 bg-background flex items-center justify-center">
-      <div className="w-full  max-w-6xl mx-auto space-y-6">
-        {/* Header Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
-          <div
-            className="transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
-            style={{
-              animationDelay: `${1 * 100}ms`,
-              animationDuration: "400ms",
-              animationFillMode: "both",
-            }}
-          >
-            <h1 className="text-3xl md:text-4xl font-bold mb-1 text-foreground">
-              Book Collection
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Organize and manage your books for easy access and efficient tracking
-            </p>
-          </div>
-
-          <div
-            className="transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
-            style={{
-              animationDelay: `${2 * 100}ms`,
-              animationDuration: "400ms",
-              animationFillMode: "both",
-            }}
-          >
-            <Link to={"/create-book"}>
-              <Button className="gap-0.5 cursor-pointer">
-                <Plus className="h-5 w-5" />
-                Add Book
-              </Button>
-            </Link>
-          </div>
+    <>
+      {/* manage loading */}
+      {isLoading && (
+        <div className="flex justify-center items-center py-6">
+          <div className="w-8 h-8 border-5 border-black/30 border-t-black dark:border-white/30 dark:border-t-white rounded-full animate-spin" />
         </div>
+      )}
 
-        {/* Table Section */}
-        <div>
-          <Card className="flex flex-col dark:bg-black gap-6 rounded-xl border px-2 shadow-sm">
-            <CardContent className="p-0">
-              <div className="overflow-x-auto min-h-[55vh]">
-                <Table>
-                  {/* table head */}
-                  <TableHeader>
-                    <TableRow className="hover:bg-transparent">
-                      {columnsTitle?.map((column, index) => (
-                        <TableHead
-                          key={column.value}
-                          className="text-center text-foreground pb-5 transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+      {/* loaded data */}
+      <div className="pt-18 lg:pb-30 pb-24 px-6 bg-background flex items-center justify-center">
+        <div className="w-full  max-w-6xl mx-auto space-y-6">
+          {/* Header Section */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
+            <div
+              className="transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+              style={{
+                animationDelay: `${1 * 100}ms`,
+                animationDuration: "400ms",
+                animationFillMode: "both",
+              }}
+            >
+              <h1 className="text-3xl md:text-4xl font-bold mb-1 text-foreground">
+                Book Collection
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Organize and manage your books for easy access and efficient
+                tracking
+              </p>
+            </div>
+
+            <div
+              className="transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+              style={{
+                animationDelay: `${2 * 100}ms`,
+                animationDuration: "400ms",
+                animationFillMode: "both",
+              }}
+            >
+              <Link to={"/create-book"}>
+                <Button className="gap-0.5 cursor-pointer">
+                  <Plus className="h-5 w-5" />
+                  Add Book
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          {/* Table Section */}
+          <div>
+            <Card className="flex flex-col dark:bg-black gap-6 rounded-xl border px-2 shadow-sm">
+              <CardContent className="p-0">
+                <div className="overflow-x-auto min-h-[55vh]">
+                  <Table>
+                    {/* table head */}
+                    <TableHeader>
+                      <TableRow className="hover:bg-transparent">
+                        {columnsTitle?.map((column, index) => (
+                          <TableHead
+                            key={column.value}
+                            className="text-center text-foreground pb-5 transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+                            style={{
+                              animationDelay: `${index * 100}ms`,
+                              animationDuration: "400ms",
+                              animationFillMode: "both",
+                            }}
+                          >
+                            {column.label}
+                          </TableHead>
+                        ))}
+                      </TableRow>
+                    </TableHeader>
+
+                    {/* table body */}
+                    <TableBody>
+                      {books?.map((book: BookData, index: number) => (
+                        <tr
+                          key={book?._id}
+                          className="border-b hover:bg-muted/50 cursor-pointer transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
                           style={{
-                            animationDelay: `${index * 100}ms`,
+                            animationDelay: `${index * 120}ms`,
                             animationDuration: "400ms",
                             animationFillMode: "both",
                           }}
                         >
-                          {column.label}
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  </TableHeader>
-
-                  {/* table body */}
-                  <TableBody>
-                    {books?.map((book: BookData, index: number) => (
-                      <tr
-                        key={book?._id}
-                        className="border-b hover:bg-muted/50 cursor-pointer transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
-                        style={{
-                          animationDelay: `${index * 120}ms`,
-                          animationDuration: "400ms",
-                          animationFillMode: "both",
-                        }}
-                      >
-                        {/* title */}
-                        <TableCell className="px-4 py-3">
-                          <div className="flex items-center gap-2">
-                            <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
-                              <BookOpen className="h-5 w-5 text-muted-foreground" />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <div className="font-medium text-sm truncate">
-                                {book?.title}
+                          {/* title */}
+                          <TableCell className="px-4 py-3">
+                            <div className="flex items-center gap-2">
+                              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                                <BookOpen className="h-5 w-5 text-muted-foreground" />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <div className="font-medium text-sm truncate">
+                                  {book?.title}
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        </TableCell>
+                          </TableCell>
 
-                        {/* author */}
-                        <TableCell className="px-4 py-3 text-center">
-                          <div className="text-sm">{book?.author}</div>
-                        </TableCell>
+                          {/* author */}
+                          <TableCell className="px-4 py-3 text-center">
+                            <div className="text-sm">{book?.author}</div>
+                          </TableCell>
 
-                        {/* genre */}
-                        <TableCell className="px-4 py-3 text-center">
-                          <Badge variant="secondary" className="text-xs">
-                            {book?.genre}
-                          </Badge>
-                        </TableCell>
+                          {/* genre */}
+                          <TableCell className="px-4 py-3 text-center">
+                            <Badge variant="secondary" className="text-xs">
+                              {book?.genre}
+                            </Badge>
+                          </TableCell>
 
-                        {/* isbn */}
-                        <TableCell className="px-4 py-3 text-center">
-                          <div className="text-xs text-muted-foreground font-mono">
-                            {book?.isbn}
-                          </div>
-                        </TableCell>
+                          {/* isbn */}
+                          <TableCell className="px-4 py-3 text-center">
+                            <div className="text-xs text-muted-foreground font-mono">
+                              {book?.isbn}
+                            </div>
+                          </TableCell>
 
-                        {/* copies */}
-                        <TableCell className="px-4 py-3 text-center">
-                          <div className="text-sm">{book?.copies}</div>
-                        </TableCell>
+                          {/* copies */}
+                          <TableCell className="px-4 py-3 text-center">
+                            <div className="text-sm">{book?.copies}</div>
+                          </TableCell>
 
-                        {/* availablity */}
-                        <TableCell className="px-4 py-3 text-center">
-                          <Badge
-                            variant={
-                              book?.available ? "default" : "destructive"
-                            }
-                            className={`text-xs ${
-                              book?.available
-                                ? "bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900 dark:text-green-300"
-                                : ""
-                            }`}
-                          >
-                            {book?.available ? "Available" : "Unavailable"}
-                          </Badge>
-                        </TableCell>
+                          {/* availablity */}
+                          <TableCell className="px-4 py-3 text-center">
+                            <Badge
+                              variant={
+                                book?.available ? "default" : "destructive"
+                              }
+                              className={`text-xs ${
+                                book?.available
+                                  ? "bg-green-100 text-green-800 hover:bg-green-100 dark:bg-green-900 dark:text-green-300"
+                                  : ""
+                              }`}
+                            >
+                              {book?.available ? "Available" : "Unavailable"}
+                            </Badge>
+                          </TableCell>
 
-                        {/* actions */}
-                        <TableCell className="px-4 py-3 text-right">
-                          <div className="flex justify-end gap-2">
-                            {/* view */}
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Link to={`/books/${book?._id}`}>
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 cursor-pointer"
-                                  >
-                                    <Eye className="h-4 w-4" />
-                                  </Button>
-                                </Link>
-                              </TooltipTrigger>
-                              <TooltipContent>View Book Details</TooltipContent>
-                            </Tooltip>
-
-                            {/* edit */}
-                            <Tooltip>
-                              <TooltipTrigger asChild>
-                                <Link to={`/edit-book/${book?._id}`}>
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8 cursor-pointer"
-                                  >
-                                    <Pencil className="h-4 w-4" />
-                                    <span className="sr-only">Edit</span>
-                                  </Button>
-                                </Link>
-                              </TooltipTrigger>
-                              <TooltipContent>Edit Book Details</TooltipContent>
-                            </Tooltip>
-
-                            {/* borrow */}
-                            {book?.available ? (
+                          {/* actions */}
+                          <TableCell className="px-4 py-3 text-right">
+                            <div className="flex justify-end gap-2">
+                              {/* view */}
                               <Tooltip>
                                 <TooltipTrigger asChild>
-                                  <Link to={`/borrow/${book?._id}`}>
+                                  <Link to={`/books/${book?._id}`}>
                                     <Button
                                       variant="ghost"
                                       size="icon"
                                       className="h-8 w-8 cursor-pointer"
-                                      disabled={!book?.available}
                                     >
-                                      <LibraryBig className="h-4 w-4" />
-                                      <span className="sr-only">Borrow</span>
+                                      <Eye className="h-4 w-4" />
                                     </Button>
                                   </Link>
                                 </TooltipTrigger>
-                                <TooltipContent>Borrow Book</TooltipContent>
+                                <TooltipContent>
+                                  View Book Details
+                                </TooltipContent>
                               </Tooltip>
-                            ) : (
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-8 w-8 cursor-pointer"
-                                disabled={!book?.available}
-                              >
-                                <LibraryBig className="h-4 w-4" />
-                                <span className="sr-only">Borrow</span>
-                              </Button>
-                            )}
 
-                            {/* delete */}
-                            <DeleteBook bookId={book?._id}></DeleteBook>
-                          </div>
-                        </TableCell>
-                      </tr>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-              <div className="px-4 pt-5 flex items-center justify-between border-t">
-                <BooksPagination
-                  currentPage={page}
-                  totalPages={totalPages}
-                  onPageChange={handlePageChange}
-                ></BooksPagination>
-              </div>
-            </CardContent>
-          </Card>
+                              {/* edit */}
+                              <Tooltip>
+                                <TooltipTrigger asChild>
+                                  <Link to={`/edit-book/${book?._id}`}>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-8 w-8 cursor-pointer"
+                                    >
+                                      <Pencil className="h-4 w-4" />
+                                      <span className="sr-only">Edit</span>
+                                    </Button>
+                                  </Link>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                  Edit Book Details
+                                </TooltipContent>
+                              </Tooltip>
+
+                              {/* borrow */}
+                              {book?.available ? (
+                                <Tooltip>
+                                  <TooltipTrigger asChild>
+                                    <Link to={`/borrow/${book?._id}`}>
+                                      <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        className="h-8 w-8 cursor-pointer"
+                                        disabled={!book?.available}
+                                      >
+                                        <LibraryBig className="h-4 w-4" />
+                                        <span className="sr-only">Borrow</span>
+                                      </Button>
+                                    </Link>
+                                  </TooltipTrigger>
+                                  <TooltipContent>Borrow Book</TooltipContent>
+                                </Tooltip>
+                              ) : (
+                                <Button
+                                  variant="ghost"
+                                  size="icon"
+                                  className="h-8 w-8 cursor-pointer"
+                                  disabled={!book?.available}
+                                >
+                                  <LibraryBig className="h-4 w-4" />
+                                  <span className="sr-only">Borrow</span>
+                                </Button>
+                              )}
+
+                              {/* delete */}
+                              <DeleteBook bookId={book?._id}></DeleteBook>
+                            </div>
+                          </TableCell>
+                        </tr>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+                <div className="px-4 pt-5 flex items-center justify-between border-t">
+                  <BooksPagination
+                    currentPage={page}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  ></BooksPagination>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

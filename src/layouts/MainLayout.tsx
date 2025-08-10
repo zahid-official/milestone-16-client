@@ -11,7 +11,7 @@ const MainLayout = () => {
       </nav>
 
       {/* outlet */}
-      <main className="">
+      <main className="min-h-[50vh]">
         <Outlet></Outlet>
       </main>
 
