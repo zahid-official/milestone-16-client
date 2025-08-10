@@ -53,6 +53,7 @@ const UpdateBook = () => {
   const bookData = data?.data;
 
   // state
+  const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // useNavigate
@@ -119,10 +120,20 @@ const UpdateBook = () => {
     }
   }, [bookData, form]);
 
+  //useEffect trigger animations on mount
+  useEffect(() => {
+    const timer = setTimeout(() => setIsVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex flex-col items-center justify-center pt-24 pb-32 px-4">
+    <div className="min-h-screen pt-20 lg:pb-30 pb-24 px-6 flex flex-col items-center justify-center">
       {/* heading */}
-      <div className={`text-center transition-all duration-700 ease-out`}>
+      <div
+        className={`text-center space-y-3 transition-all duration-700 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
+      >
         <h1 className="text-3xl md:text-4xl font-bold mb-1 tracking-tight text-gray-900 dark:text-white transition-all duration-700 ease-out delay-200">
           Edit Book Details
         </h1>
@@ -133,9 +144,12 @@ const UpdateBook = () => {
 
       {/* form */}
       <div
-        className={`w-full max-w-xl mt-10 transition-all duration-1000 ease-out transform`}
+        className={`w-full max-w-xl mt-8 transition-all duration-700 ease-out ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+        }`}
+        style={{ transitionDelay: "250ms" }}
       >
-        <Card className="shadow-xl border-0 pt-14 pb-17 px-2">
+        <Card className="shadow-xl pt-14 pb-17 px-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl font-bold">
               <BookOpen className="-mb-1.5" />
