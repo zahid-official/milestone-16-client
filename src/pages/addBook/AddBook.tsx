@@ -96,7 +96,7 @@ const AddBook = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br dark:from-[#0a0a0a] dark:to-[#0b0b0b] from-slate-50 to-slate-100 flex flex-col items-center justify-center pt-24 pb-32 px-4">
+    <div className="min-h-screen pt-20 lg:pb-30 pb-24 px-6 flex flex-col items-center justify-center">
       {/* heading */}
       <div
         className={`text-center space-y-3 transition-all duration-700 ease-out ${
@@ -118,7 +118,7 @@ const AddBook = () => {
         }`}
         style={{ transitionDelay: "250ms" }}
       >
-        <Card className="shadow-xl border-0 pt-14 pb-17 px-2">
+        <Card className="shadow-xl pt-14 pb-17 px-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-2xl font-bold">
               <BookOpen className="-mb-1.5" />
