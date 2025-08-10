@@ -26,7 +26,7 @@ export const baseApi = createApi({
         method: "POST",
         body: bookData,
       }),
-      invalidatesTags: ["book", "bookDetails"],
+      invalidatesTags: ["book", "bookDetails", "borrowSummary"],
     }),
 
     // update book
@@ -36,7 +36,7 @@ export const baseApi = createApi({
         method: "PUT",
         body: bookData,
       }),
-      invalidatesTags: ["book", "bookDetails"],
+      invalidatesTags: ["book", "bookDetails", "borrowSummary"],
     }),
 
     // delete book
@@ -45,7 +45,7 @@ export const baseApi = createApi({
         url: `/books/${id}`,
         method: "Delete",
       }),
-      invalidatesTags: ["book", "bookDetails"],
+      invalidatesTags: ["book", "bookDetails", "borrowSummary"],
     }),
 
     // borrow book summary

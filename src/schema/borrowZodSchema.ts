@@ -10,20 +10,11 @@ const borrowZodSchema = (availableBook: number) =>
       .min(1, "Quantity must be a positive number")
       .max(availableBook, `Maximum ${availableBook} copies available`),
 
-    dueDate: z.date({ error: "Due date is required" }).refine(
-      (date) => {
-        const now = new Date();
-        const today = new Date(
-          now.getFullYear(),
-          now.getMonth(),
-          now.getDate()
-        );
-        return date >= today;
-      },
-      {
-        message: "Due date must be today or in the future",
-      }
-    ),
+    dueDate: z
+      .date({ error: "Due date is required" })
+      .refine((date) => date >= new Date(), {
+        error: "Due date must be in the future",
+      }),
   });
 
 export default borrowZodSchema;
