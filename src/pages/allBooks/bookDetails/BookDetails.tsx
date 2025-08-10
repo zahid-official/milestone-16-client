@@ -25,15 +25,15 @@ const BookDetails = () => {
         </div>
       )}
 
-      <div className="py-28 flex items-center justify-center p-4 bg-gray-50">
-        <Card className="w-full p-8 max-w-4xl grid md:grid-cols-2 overflow-hidden shadow-xl rounded-xl border transition-all duration-500 ease-in-out hover:shadow-2xl">
+      <div className="lg:py-28 py-24 flex items-center justify-center px-6">
+        <Card className="w-full sm:p-8 p-6 max-w-4xl grid md:grid-cols-2 items-center overflow-hidden shadow-xl rounded-xl border transition-all duration-500 ease-in-out hover:shadow-2xl">
           {/* left */}
-          <div className="bg-black rounded-2xl flex items-center justify-center group">
+          <div className="bg-black sm:h-96 h-80 rounded-2xl flex items-center justify-center group">
             <BookOpen className="w-32 h-32 md:w-40 md:h-40 text-white transition-transform duration-300 ease-in-out group-hover:scale-110" />
           </div>
 
           {/* right */}
-          <div className="p-8 flex flex-col justify-center space-y-6">
+          <div className="sm:p-8 px-2 flex flex-col justify-center space-y-6">
             <CardHeader className="p-0 pb-2">
               <CardTitle className="text-2xl md:text-3xl font-bold leading-tight">
                 {bookData?.title}
@@ -75,7 +75,7 @@ const BookDetails = () => {
                 </div>
 
                 {/* copies */}
-                <div className="font-medium">Copies Available:</div>
+                <div className="font-medium">Copies:</div>
                 <div>{bookData?.copies}</div>
               </div>
             </CardContent>
