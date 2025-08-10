@@ -61,11 +61,11 @@ const AllBooks = () => {
               animationFillMode: "both",
             }}
           >
-            <h1 className="text-2xl font-bold text-foreground">
+            <h1 className="text-3xl md:text-4xl font-bold mb-1 text-foreground">
               Book Collection
             </h1>
             <p className="text-sm text-muted-foreground">
-              Manage and organize your library collection
+              Organize and manage your books for easy access and efficient tracking
             </p>
           </div>
 
@@ -116,7 +116,6 @@ const AllBooks = () => {
                     {books?.map((book: BookData, index: number) => (
                       <tr
                         key={book?._id}
-                        // className={` duration-300 transform transition-all ${
                         className="border-b hover:bg-muted/50 cursor-pointer transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
                         style={{
                           animationDelay: `${index * 120}ms`,
