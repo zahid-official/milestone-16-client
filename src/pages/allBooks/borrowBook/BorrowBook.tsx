@@ -92,18 +92,34 @@ const BorrowBook = () => {
   };
 
   return (
-    <div className="pt-22 pb-32 bg-white flex items-center justify-center p-4">
-      <div className="w-full max-w-lg mx-auto space-y-6">
+    <div className="pt-18 lg:pb-30 pb-24 px-6 flex items-center justify-center">
+      <div className="w-full max-w-xl mx-auto space-y-6">
         {/* page header */}
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-black">Borrow Book</h1>
-          <p className="text-lg text-muted-foreground">
-            Complete the borrowing process
+        <section
+          className="text-center space-y-3 mb-10 transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+          style={{
+            animationDelay: `${120}ms`,
+            animationDuration: "400ms",
+            animationFillMode: "both",
+          }}
+        >
+          <h1 className="text-3xl md:text-4xl font-bold mb-1 tracking-tight transition-all duration-700 ease-out delay-200">
+            Borrow Book
+          </h1>
+          <p className="text-base text-gray-600 dark:text-gray-300 transition-all duration-700 ease-out delay-200">
+            complete the borrowing process efficiently with easy tracking
           </p>
-        </div>
+        </section>
 
         {/* book details */}
-        <Card className="border px-3 py-9 border-border gap-3 rounded-xl shadow-sm mb-9">
+        <Card
+          className="border sm:px-3 py-11 border-border gap-3 rounded-xl shadow-sm mb-9 transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+          style={{
+            animationDelay: `${250}ms`,
+            animationDuration: "400ms",
+            animationFillMode: "both",
+          }}
+        >
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-xl font-semibold">
               <BookOpen className="-mb-1" />
@@ -114,7 +130,7 @@ const BorrowBook = () => {
           {/* details section */}
           <CardContent className="space-y-4">
             {/* title & author */}
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 grid-cols-2">
               <div>
                 <Label className="text-sm font-medium text-muted-foreground">
                   Title
@@ -132,7 +148,7 @@ const BorrowBook = () => {
             </div>
 
             {/* genre & isbn */}
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 grid-cols-2">
               <div>
                 <Label className="text-sm font-medium text-muted-foreground">
                   Genre
@@ -152,7 +168,7 @@ const BorrowBook = () => {
             </div>
 
             {/* copies & available */}
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-4 grid-cols-2">
               <div>
                 <Label className="text-sm font-medium text-muted-foreground">
                   Copies
@@ -181,7 +197,14 @@ const BorrowBook = () => {
         </Card>
 
         {/* borrowing information */}
-        <Card className="border border-border  px-3 py-9 rounded-xl shadow-sm">
+        <Card
+          className="border border-border sm:px-3 py-11 rounded-xl shadow-sm transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+          style={{
+            animationDelay: `${400}ms`,
+            animationDuration: "400ms",
+            animationFillMode: "both",
+          }}
+        >
           <CardHeader>
             <CardTitle className="flex items-center gap-1 text-xl font-semibold">
               <User className="-mb-1" />
@@ -244,7 +267,7 @@ const BorrowBook = () => {
                               {field.value ? (
                                 format(field.value, "PPP")
                               ) : (
-                                <span>Pick a due date to return the book</span>
+                                <span>Pick a date to return the book</span>
                               )}
                               <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
