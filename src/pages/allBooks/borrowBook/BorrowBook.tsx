@@ -37,6 +37,7 @@ import type { apiErrorResponse } from "@/types/apiErrorResponse";
 const BorrowBook = () => {
   // state
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // redux endpoint hook
   const params = useParams();
@@ -267,7 +268,7 @@ const BorrowBook = () => {
                             Due date to return
                             <span className="text-red-500">*</span>
                           </FormLabel>
-                          <Popover>
+                          <Popover open={open} onOpenChange={setOpen}>
                             <PopoverTrigger asChild>
                               <FormControl>
                                 <Button
@@ -293,7 +294,10 @@ const BorrowBook = () => {
                               <Calendar
                                 mode="single"
                                 selected={field.value}
-                                onSelect={field.onChange}
+                                onSelect={(date) => {
+                                  field.onChange(date);
+                                  setOpen(false);
+                                }}
                                 initialFocus
                               />
                             </PopoverContent>
