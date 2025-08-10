@@ -6,6 +6,21 @@ const ShelfyActivity = () => {
   // state
   const [isVisible, setIsVisible] = useState(false);
 
+  // recent activity
+  const activity = [
+    {
+      title: "The Great Gatsby",
+      status: "Returned",
+      time: "2 min ago",
+    },
+    {
+      title: "To Kill a Mockingbird",
+      status: "Borrowed",
+      time: "1 hour ago",
+    },
+    { title: "1984", status: "Added", time: "3 hours ago" },
+  ];
+
   // useEffect
   useEffect(() => {
     const timeout = setTimeout(() => setIsVisible(true), 50);
@@ -72,19 +87,7 @@ const ShelfyActivity = () => {
               </div>
 
               <div className="space-y-3">
-                {[
-                  {
-                    title: "The Great Gatsby",
-                    status: "Returned",
-                    time: "2 min ago",
-                  },
-                  {
-                    title: "To Kill a Mockingbird",
-                    status: "Borrowed",
-                    time: "1 hour ago",
-                  },
-                  { title: "1984", status: "Added", time: "3 hours ago" },
-                ].map((book, index) => (
+                {activity?.map((book, index) => (
                   <div
                     key={book.title}
                     className={`flex items-center gap-3 p-3 bg-gray-50 dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-[#222] transition-all duration-300 cursor-pointer transform ${

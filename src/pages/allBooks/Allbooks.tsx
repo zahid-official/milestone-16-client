@@ -34,6 +34,7 @@ const columnsTitle = [
 ];
 
 const AllBooks = () => {
+  // state
   const [page, setPage] = useState(1);
   const limit = 10;
   const { data } = useGetBookQuery({ page, limit });
@@ -48,11 +49,18 @@ const AllBooks = () => {
   };
 
   return (
-    <div className="mt-36 mb-26 bg-background flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="pt-18 lg:pb-30 pb-24 px-6 bg-background flex items-center justify-center">
       <div className="w-full  max-w-6xl mx-auto space-y-6">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-2">
-          <div>
+          <div
+            className="transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+            style={{
+              animationDelay: `${1 * 100}ms`,
+              animationDuration: "400ms",
+              animationFillMode: "both",
+            }}
+          >
             <h1 className="text-2xl font-bold text-foreground">
               Book Collection
             </h1>
@@ -60,27 +68,42 @@ const AllBooks = () => {
               Manage and organize your library collection
             </p>
           </div>
-          <Link to={"/create-book"}>
-            <Button className="gap-0.5 cursor-pointer">
-              <Plus className="h-5 w-5" />
-              Add Book
-            </Button>
-          </Link>
+
+          <div
+            className="transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+            style={{
+              animationDelay: `${2 * 100}ms`,
+              animationDuration: "400ms",
+              animationFillMode: "both",
+            }}
+          >
+            <Link to={"/create-book"}>
+              <Button className="gap-0.5 cursor-pointer">
+                <Plus className="h-5 w-5" />
+                Add Book
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Table Section */}
         <div>
-          <Card className="flex flex-col gap-6 rounded-xl border px-2 shadow-sm">
+          <Card className="flex flex-col dark:bg-black gap-6 rounded-xl border px-2 shadow-sm">
             <CardContent className="p-0">
               <div className="overflow-x-auto min-h-[55vh]">
                 <Table>
                   {/* table head */}
                   <TableHeader>
                     <TableRow className="hover:bg-transparent">
-                      {columnsTitle?.map((column) => (
+                      {columnsTitle?.map((column, index) => (
                         <TableHead
                           key={column.value}
-                          className="text-center text-foreground pb-5"
+                          className="text-center text-foreground pb-5 transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+                          style={{
+                            animationDelay: `${index * 100}ms`,
+                            animationDuration: "400ms",
+                            animationFillMode: "both",
+                          }}
                         >
                           {column.label}
                         </TableHead>
@@ -90,10 +113,16 @@ const AllBooks = () => {
 
                   {/* table body */}
                   <TableBody>
-                    {books?.map((book: BookData) => (
+                    {books?.map((book: BookData, index: number) => (
                       <tr
                         key={book?._id}
-                        className="border-b hover:bg-muted/50 transition-colors cursor-pointer"
+                        // className={` duration-300 transform transition-all ${
+                        className="border-b hover:bg-muted/50 cursor-pointer transition-all duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform transform-gpu animate-in fade-in slide-in-from-top-2 origin-center"
+                        style={{
+                          animationDelay: `${index * 120}ms`,
+                          animationDuration: "400ms",
+                          animationFillMode: "both",
+                        }}
                       >
                         {/* title */}
                         <TableCell className="px-4 py-3">
@@ -224,7 +253,7 @@ const AllBooks = () => {
                   </TableBody>
                 </Table>
               </div>
-              <div className="px-4 pt-5 flex items-center justify-between border-t bg-muted/20">
+              <div className="px-4 pt-5 flex items-center justify-between border-t">
                 <BooksPagination
                   currentPage={page}
                   totalPages={totalPages}
