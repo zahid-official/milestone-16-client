@@ -15,7 +15,7 @@ export default function Banner() {
     rootMargin: "0px 0px -100px 0px",
   });
   return (
-    <section className="lg:py-32 py-24 px-6 relative overflow-hidden bg-gray-50 dark:bg-black">
+    <section className="lg:py-32 py-24 px-6 relative overflow-hidden">
       <div
         ref={featureRef}
         className={`container max-w-6xl mx-auto transition-all duration-700 ease-out ${

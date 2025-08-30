@@ -1,7 +1,7 @@
 import Banner from "./footerBanner/Banner";
 import HeroSecton from "./heroSection/HeroSecton";
 import ManageSection from "./manageSection/ManageSection";
-import RankedBooks from "./rankedBooks/RankedBooks";
+// import RankedBooks from "./rankedBooks/RankedBooks";
 
 const Home = () => {
   return (
@@ -17,9 +17,9 @@ const Home = () => {
       </section>
 
       {/* ranked books section */}
-      <section>
+      {/* <section>
         <RankedBooks></RankedBooks>
-      </section>
+      </section> */}
 
       {/* banner */}
       <section>
