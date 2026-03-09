@@ -27,8 +27,12 @@ const ManageSection = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-4 lg:leading-12 max-w-4xl mx-auto">
-            Everything You Need to <br className="lg:block hidden" /> Manage Your Library
+          <span className="inline-flex items-center rounded-full border border-gray-300/80 dark:border-gray-700 bg-white/90 dark:bg-gray-900/80 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] uppercase text-gray-600 dark:text-gray-300">
+            Manage Library
+          </span>
+          <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white my-4 lg:leading-14 max-w-4xl mx-auto">
+            Everything You Need to <br className="lg:block hidden" /> Manage
+            Your Library
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
             Powerful features designed to make library management effortless,

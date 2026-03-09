@@ -1,3 +1,4 @@
+import FAQ from "./faq/FAQ";
 import Banner from "./footerBanner/Banner";
 import HeroSecton from "./heroSection/HeroSecton";
 import ManageSection from "./manageSection/ManageSection";
@@ -19,6 +20,11 @@ const Home = () => {
       {/* ranked books section */}
       <section>
         <RankedBooks></RankedBooks>
+      </section>
+
+      {/* FAQ section */}
+      <section>
+        <FAQ></FAQ>
       </section>
 
       {/* banner */}

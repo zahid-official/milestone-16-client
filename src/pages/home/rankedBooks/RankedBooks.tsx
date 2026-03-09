@@ -26,6 +26,9 @@ const RankedBooks = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
+          <span className="inline-flex items-center rounded-full border border-gray-300/80 dark:border-gray-700 bg-white/90 dark:bg-gray-900/80 px-4 py-1.5 text-xs font-semibold tracking-[0.18em] uppercase text-gray-600 dark:text-gray-300">
+            Reader Favorites
+          </span>
           <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mt-5 mb-4 lg:leading-12 max-w-4xl mx-auto">
             Most Borrowed Books
           </h1>
