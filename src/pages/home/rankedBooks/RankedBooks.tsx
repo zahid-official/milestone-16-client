@@ -12,8 +12,11 @@ const RankedBooks = () => {
   });
 
   return (
-    <div className="flex items-center justify-center lg:py-30 py-22 px-6">
-      <div className="max-w-6xl mx-auto w-full">
+    <div className="relative overflow-hidden lg:py-30 py-22 px-6">
+      <div className="pointer-events-none absolute -left-30 top-10 h-56 w-56 rounded-full bg-gray-200/70 blur-3xl dark:bg-gray-900" />
+      <div className="pointer-events-none absolute -right-24 top-20 h-56 w-56 rounded-full bg-gray-200/60 blur-3xl dark:bg-gray-900" />
+
+      <div className="max-w-6xl mx-auto w-full relative">
         {/* header */}
         <div
           ref={featureRef}
@@ -23,7 +26,7 @@ const RankedBooks = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-3 lg:leading-12 max-w-4xl mx-auto">
+          <h1 className="text-4xl sm:text-4xl lg:text-5xl font-bold text-black dark:text-white mt-5 mb-4 lg:leading-12 max-w-4xl mx-auto">
             Most Borrowed Books
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">
@@ -36,11 +39,11 @@ const RankedBooks = () => {
         <BookCard isVisible={featureVisible}></BookCard>
 
         {/* view all btn */}
-        <div className="border-gray-100 max-w-60 dark:border-gray-800 pt-10">
+        <div className="max-w-60 mx-auto pt-12">
           <Link to={`/books`}>
             <Button
               size="lg"
-              className="group w-full h-12 cursor-pointer bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 transition-all duration-300 ease-out transform hover:scale-105 hover:shadow-lg px-8 py-5 text-base font-medium"
+              className="group w-full h-12 cursor-pointer rounded-lg bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200 transition-all duration-300 ease-out transform hover:scale-105 hover:shadow-lg px-8 py-5 text-base font-medium"
             >
               View All Books
               <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
