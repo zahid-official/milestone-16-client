@@ -1,4 +1,4 @@
-# Shelfy - Modern Library Management System
+# Shelfy - Library Management System
 
 > A comprehensive, user-friendly web application for streamlined library operations built with React, TypeScript, and modern web technologies.
 > 
